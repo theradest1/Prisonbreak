@@ -201,7 +201,7 @@ MonoBehaviour:
   ID: 
   team: prisoner
   playerTransform: {fileID: 2051250512}
-  updateDelay: 1
+  updateDelay: 0.05
   level: 0
   playerPrefab: {fileID: 2915430880129501809, guid: 1ba8b15f22db6994fa7a78733790bdb7, type: 3}
 --- !u!4 &311639551

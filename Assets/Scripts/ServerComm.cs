@@ -68,15 +68,16 @@ public class ServerComm : MonoBehaviour
 				Debug.Log("Recieved Data: " + processedData);
 				foreach (JSONNode subNode in processedData){
 					Debug.Log("Node: " + subNode.ToString());
-					GameObject targetPlayer = GameObject.Find(subNode["name"]);
-					if(targetPlayer != null){
-						targetPlayer.transform.position = StringToVector3(subNode["pos"]);
-						targetPlayer.transform.rotation = Quaternion.Euler(StringToVector3(subNode["rot"]));
-						//targetPlayer.GetComponent<Rigidbody>().velocity = StringToVector3(processedData["" + _ID]["vel"]);
-					}
-					else{
-						targetPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-						targetPlayer.name = subNode["name"].ToString();
+					if(subNode["name"] != usrname){
+						GameObject targetPlayer = GameObject.Find(subNode["name"]);
+						if(targetPlayer != null){
+							targetPlayer.transform.position = StringToVector3(subNode["pos"]);
+							targetPlayer.transform.rotation = Quaternion.Euler(StringToVector3(subNode["rot"]));
+						}
+						else{
+							targetPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+							targetPlayer.name = subNode["name"];
+						}
 					}
 				}
 			}
