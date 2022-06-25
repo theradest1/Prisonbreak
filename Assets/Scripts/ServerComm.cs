@@ -107,7 +107,7 @@ public class ServerComm : MonoBehaviour
 		}
 
 		Application.Quit();
-		UnityEditor.EditorApplication.isPlaying = false;
+		//UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
 	}
 
 	public Vector3 StringToVector3(string str){
