@@ -35,6 +35,7 @@ app.get("/join/:usrname/:team/", (req, res) =>{
 })
 
 app.get("/update/:pos/:rot/:vel/:ID", (req, res) => {
+	console.log("Recieved Server Request: " + req)
 	var ID = req.params["ID"];
 	playerData[ID].pos = req.params["pos"];
 	playerData[ID].rot = req.params["rot"];

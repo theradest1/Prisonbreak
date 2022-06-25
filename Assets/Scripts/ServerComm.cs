@@ -66,19 +66,17 @@ public class ServerComm : MonoBehaviour
 				string data = www.downloadHandler.text;
 				JSONNode processedData = ProcessJSON(data);
 				Debug.Log("Recieved Data: " + processedData);
-				for(int _ID = 0; _ID < processedData.Count; _ID ++){
-					if(processedData["" + _ID] != null){
-						Debug.Log("ID: " + _ID + processedData["" + _ID].ToString());
-						GameObject targetPlayer = GameObject.Find("" + _ID);
-						if(targetPlayer != null){
-							targetPlayer.transform.position = StringToVector3(processedData["" + _ID]["pos"]);
-							targetPlayer.transform.rotation = Quaternion.Euler(StringToVector3(processedData["" + _ID]["rot"]));
-							//targetPlayer.GetComponent<Rigidbody>().velocity = StringToVector3(processedData["" + _ID]["vel"]);
-						}
-						else{
-							targetPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-							targetPlayer.name = _ID.ToString();
-						}
+				foreach (JSONNode subNode in processedData){
+					Debug.Log("Node: " + subNode.ToString());
+					GameObject targetPlayer = GameObject.Find(subNode["name"]);
+					if(targetPlayer != null){
+						targetPlayer.transform.position = StringToVector3(subNode["pos"]);
+						targetPlayer.transform.rotation = Quaternion.Euler(StringToVector3(subNode["rot"]));
+						//targetPlayer.GetComponent<Rigidbody>().velocity = StringToVector3(processedData["" + _ID]["vel"]);
+					}
+					else{
+						targetPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+						targetPlayer.name = subNode["name"].ToString();
 					}
 				}
 			}
@@ -107,7 +105,7 @@ public class ServerComm : MonoBehaviour
 		}
 
 		Application.Quit();
-		//UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
+		UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
 	}
 
 	public Vector3 StringToVector3(string str){
