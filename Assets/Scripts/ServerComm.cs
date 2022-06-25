@@ -73,7 +73,7 @@ public class ServerComm : MonoBehaviour
 						if(targetPlayer != null){
 							targetPlayer.transform.position = StringToVector3(processedData["" + _ID]["pos"]);
 							targetPlayer.transform.rotation = Quaternion.Euler(StringToVector3(processedData["" + _ID]["rot"]));
-							targetPlayer.GetComponent<Rigidbody>().velocity = StringToVector3(processedData["" + _ID]["vel"]);
+							//targetPlayer.GetComponent<Rigidbody>().velocity = StringToVector3(processedData["" + _ID]["vel"]);
 						}
 						else{
 							targetPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);

@@ -15,7 +15,7 @@ public class gameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("escape"))
         {
             print("Space key was pressed; attempting to leave server");
 			StartCoroutine(serverComm.LeaveServer());
