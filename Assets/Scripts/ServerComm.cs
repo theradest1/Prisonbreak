@@ -47,6 +47,7 @@ public class ServerComm : MonoBehaviour
 			level = processedData["level"];
 
 			Debug.Log("Started multiplayer communication");
+			GameObject.Find("Player").name = ID;
 			StartCoroutine(updatePlayers());
 		}
 	}
@@ -54,7 +55,7 @@ public class ServerComm : MonoBehaviour
 	IEnumerator updatePlayers()
 	{
 		while(true){
-			string address = serverAddress + "update/" + playerTransform.position + "/" + playerTransform.rotation.eulerAngles + "/" + /*playerRB.velocity*/"(0, 0, 0)" + "/" + ID + "/";
+			string address = serverAddress + "update/" + playerTransform.position + "/" + playerTransform.rotation.eulerAngles + "/" + ID + "/";
 			UnityWebRequest www = UnityWebRequest.Get(address);
 			yield return www.SendWebRequest();
 			Debug.Log("Made server request: " + address);
@@ -65,18 +66,18 @@ public class ServerComm : MonoBehaviour
 			else{
 				string data = www.downloadHandler.text;
 				JSONNode processedData = ProcessJSON(data);
-				Debug.Log("Recieved Data: " + processedData);
+				//Debug.Log("Recieved Data: " + processedData);
 				foreach (JSONNode subNode in processedData){
-					Debug.Log("Node: " + subNode.ToString());
-					if(subNode["name"] != usrname){
-						GameObject targetPlayer = GameObject.Find(subNode["name"]);
+					//Debug.Log("Node: " + subNode.ToString());
+					if(subNode["ID"] != usrname){
+						GameObject targetPlayer = GameObject.Find(subNode["ID"]);
 						if(targetPlayer != null){
 							targetPlayer.transform.position = StringToVector3(subNode["pos"]);
 							targetPlayer.transform.rotation = Quaternion.Euler(StringToVector3(subNode["rot"]));
 						}
 						else{
 							targetPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-							targetPlayer.name = subNode["name"];
+							targetPlayer.name = subNode["ID"];
 						}
 					}
 				}

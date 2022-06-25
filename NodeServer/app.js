@@ -5,8 +5,8 @@ const port = 8000;
 const host = "0.0.0.0";
 var IDcounter = 0;
 var players = 0;
-var playerData = {
-};
+var playerData = {};
+var positionalData = {};
 
 app.get("/", (req, res) =>{
 	res.send("Hello World")
@@ -27,6 +27,7 @@ app.get("/join/:usrname/:team/", (req, res) =>{
 		"events": {}
 	};
 	playerData[IDcounter] = data;
+	positionalData[IDcounter] = {"pos": data["pos"], "rot": data["rot"], "ID": IDcounter};
 	res.json({"ID": IDcounter, "level": 3.7});
 	console.log("Player with ID " + IDcounter + " joined the game.")
 	console.log(playerData);
@@ -34,13 +35,15 @@ app.get("/join/:usrname/:team/", (req, res) =>{
 	IDcounter += 1;
 })
 
-app.get("/update/:pos/:rot/:vel/:ID", (req, res) => {
+app.get("/update/:pos/:rot/:ID", (req, res) => {
 	console.log("Recieved Server Request: " + req)
 	var ID = req.params["ID"];
 	playerData[ID].pos = req.params["pos"];
 	playerData[ID].rot = req.params["rot"];
-	//playerData[ID].vel = req.params["vel"];
-	res.json(playerData); //send only pos, rot, vel for only the other players (change later)
+
+	positionalData[ID].pos = req.params["pos"];
+	positionalData[ID].rot = req.params["rot"];
+	res.json(positionalData); //send only pos, rot, vel for only the other players (change later)
 	console.log(playerData);
 })
 
@@ -50,6 +53,7 @@ app.get("/leave/:ID/", (req, res) =>{
 	res.json("recieved");
 	console.log("Player with ID " + req.params["ID"] + " left the game.");
 	delete playerData[req.params["ID"]];
+	delete positionalData[req.params["ID"]];
 })
 
 app.get("/user/:ID/0", (req, res) =>{
