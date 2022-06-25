@@ -10,10 +10,10 @@ public class ServerComm : MonoBehaviour
 	public string ID;
 	public string team = "prisoner";
 	public Transform playerTransform;
-	public Vector3 velocity = new Vector3(0, 0, 0);
+	public Rigidbody playerRB;
 	public float updateDelay = .1f;
 	public float level;
-	string serverAddress = "http://localhost:8000/";
+	string serverAddress = "http://192.168.0.24:8000/";
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +44,7 @@ public class ServerComm : MonoBehaviour
 			ID = processedData["ID"];
 			playerTransform.position = new Vector3(0f, 0f, 0f); //change to get from node
 			level = processedData["level"];
-			
+
 			Debug.Log("Started multiplayer communication");
 			StartCoroutine(updatePlayers());
 		}
@@ -53,7 +53,7 @@ public class ServerComm : MonoBehaviour
 	IEnumerator updatePlayers()
 	{
 		while(true){
-			string address = serverAddress + "update/" + playerTransform.position + "/" + playerTransform.rotation.eulerAngles + "/" + velocity + "/" + ID + "/";
+			string address = serverAddress + "update/" + playerTransform.position + "/" + playerTransform.rotation.eulerAngles + "/" + playerRB.velocity + "/" + ID + "/";
 			UnityWebRequest www = UnityWebRequest.Get(address);
 			yield return www.SendWebRequest();
 			Debug.Log("Made server request: " + address);
@@ -65,6 +65,11 @@ public class ServerComm : MonoBehaviour
 				string data = www.downloadHandler.text;
 				JSONNode processedData = ProcessJSON(data);
 				Debug.Log("Recieved Data: " + processedData);
+				for(int _ID = 0; _ID < processedData.Count; _ID ++){
+					if(processedData["" + _ID] != null){
+						Debug.Log("ID: " + _ID + processedData["" + _ID].ToString());
+					}
+				}
 			}
 			yield return new WaitForSeconds(updateDelay);
 		}
@@ -73,7 +78,26 @@ public class ServerComm : MonoBehaviour
 	JSONNode ProcessJSON(string raw)
 	{
 		JSONNode node = JSON.Parse(raw);
-		Debug.Log(node);
 		return node;
 	}
+
+	public IEnumerator LeaveServer()
+	{
+		string address = serverAddress + "leave/" + ID + "/";
+		UnityWebRequest www = UnityWebRequest.Get(address);
+		yield return www.SendWebRequest();
+		Debug.Log("Made server request: " + address);
+		if(www.result != UnityWebRequest.Result.Success){
+			Debug.LogError("Somethig Went wrong: " + www.error);
+			yield break;
+		}
+		else{
+			Debug.Log("Left server succesfully");
+		}
+
+		Application.Quit();
+		UnityEditor.EditorApplication.isPlaying = false;
+	}
+
+	
 }
