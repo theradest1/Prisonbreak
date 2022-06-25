@@ -10,7 +10,7 @@ public class ServerComm : MonoBehaviour
 	public string ID;
 	public string team = "prisoner";
 	public Transform playerTransform;
-	public Rigidbody playerRB;
+	//public Rigidbody playerRB;
 	public float updateDelay = .1f;
 	public float level;
 	string serverAddress = "http://192.168.0.24:8000/";
@@ -54,7 +54,7 @@ public class ServerComm : MonoBehaviour
 	IEnumerator updatePlayers()
 	{
 		while(true){
-			string address = serverAddress + "update/" + playerTransform.position + "/" + playerTransform.rotation.eulerAngles + "/" + playerRB.velocity + "/" + ID + "/";
+			string address = serverAddress + "update/" + playerTransform.position + "/" + playerTransform.rotation.eulerAngles + "/" + /*playerRB.velocity*/"(0, 0, 0)" + "/" + ID + "/";
 			UnityWebRequest www = UnityWebRequest.Get(address);
 			yield return www.SendWebRequest();
 			Debug.Log("Made server request: " + address);
