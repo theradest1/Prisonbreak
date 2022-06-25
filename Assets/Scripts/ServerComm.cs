@@ -14,6 +14,7 @@ public class ServerComm : MonoBehaviour
 	public float updateDelay = .1f;
 	public float level;
 	string serverAddress = "http://192.168.0.24:8000/";
+	public GameObject playerPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -68,6 +69,16 @@ public class ServerComm : MonoBehaviour
 				for(int _ID = 0; _ID < processedData.Count; _ID ++){
 					if(processedData["" + _ID] != null){
 						Debug.Log("ID: " + _ID + processedData["" + _ID].ToString());
+						GameObject targetPlayer = GameObject.Find("" + _ID);
+						if(targetPlayer != null){
+							targetPlayer.transform.position = StringToVector3(processedData["" + _ID]["pos"]);
+							targetPlayer.transform.rotation = Quaternion.Euler(StringToVector3(processedData["" + _ID]["rot"]));
+							targetPlayer.GetComponent<Rigidbody>().velocity = StringToVector3(processedData["" + _ID]["vel"]);
+						}
+						else{
+							targetPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+							targetPlayer.name = _ID.ToString();
+						}
 					}
 				}
 			}
@@ -97,6 +108,12 @@ public class ServerComm : MonoBehaviour
 
 		Application.Quit();
 		UnityEditor.EditorApplication.isPlaying = false;
+	}
+
+	public Vector3 StringToVector3(string str){
+		str = str.Substring(1, str.Length-2); //get rid of parenthisis
+		string[] parts = str.Split(',');
+		return new Vector3(float.Parse(parts[0]), float.Parse(parts[1]), float.Parse(parts[2]));
 	}
 
 	

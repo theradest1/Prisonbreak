@@ -16,9 +16,9 @@ app.get("/join/:usrname/:team/", (req, res) =>{
 	var data = {
 		"name": req.params["usrname"],
 		"team": req.params["team"],
-		"location": "(0, 0, 0)", //Change loc and rot
-		"rotation": "(0, 0, 0)",
-		"velocity": "(0, 0, 0)",
+		"pos": "(0, 0, 0)", //Change loc and rot
+		"rot": "(0, 0, 0)",
+		"vel": "(0, 0, 0)",
 		"level": 3.7, //Get this and inventory from a server-stored JSON file
 		"inventory": [
 			{ item: "pistol" },
@@ -36,9 +36,9 @@ app.get("/join/:usrname/:team/", (req, res) =>{
 
 app.get("/update/:pos/:rot/:vel/:ID", (req, res) => {
 	var ID = req.params["ID"];
-	playerData[ID].position = req.params["pos"];
-	playerData[ID].rotation = req.params["rot"];
-	playerData[ID].velocty = req.params["vel"];
+	playerData[ID].pos = req.params["pos"];
+	playerData[ID].rot = req.params["rot"];
+	playerData[ID].vel = req.params["vel"];
 	res.json(playerData);
 	console.log(playerData);
 })
