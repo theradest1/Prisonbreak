@@ -25,8 +25,6 @@ public class PlayerMovement : MonoBehaviour
     {
 		isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-		Debug.Log(isGrounded);
-
         float x = Input.GetAxis("Horizontal");
 		float z = Input.GetAxis("Vertical");
 

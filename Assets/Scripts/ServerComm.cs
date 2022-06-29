@@ -37,16 +37,16 @@ public class ServerComm : MonoBehaviour
 			Debug.LogError("Could not join, try again and check server status");
 		}
 		else{
-			Debug.Log("Joined server succesfully");
+			//Debug.Log("Joined server succesfully");
 			string data = www.downloadHandler.text;
-			Debug.Log("Response: " + data);
+			//Debug.Log("Response: " + data);
 
 			JSONNode processedData = ProcessJSON(data);
 			ID = processedData["ID"];
 			playerTransform.position = new Vector3(0f, 0f, 0f); //change to get from node
 			level = processedData["level"];
 
-			Debug.Log("Started multiplayer communication");
+			//Debug.Log("Started multiplayer communication");
 			GameObject.Find("Player").name = ID;
 			StartCoroutine(updatePlayers());
 		}
@@ -58,7 +58,7 @@ public class ServerComm : MonoBehaviour
 			string address = serverAddress + "update/" + playerTransform.position + "/" + playerTransform.rotation.eulerAngles + "/" + ID + "/";
 			UnityWebRequest www = UnityWebRequest.Get(address);
 			yield return www.SendWebRequest();
-			Debug.Log("Made server request: " + address);
+			//Debug.Log("Made server request: " + address);
 
 			if(www.result != UnityWebRequest.Result.Success){
 				Debug.LogError("Somethig Went wrong: " + www.error);
@@ -72,7 +72,7 @@ public class ServerComm : MonoBehaviour
 					if(subNode["ID"] != usrname){
 						GameObject targetPlayer = GameObject.Find(subNode["ID"]);
 						if(targetPlayer != null){
-							targetPlayer.transform.position = StringToVector3(subNode["pos"]);
+							Debug.Log(targetPlayer.GetComponent<ClientMovement>().targetPos);// = StringToVector3(subNode["pos"]);
 							targetPlayer.transform.rotation = Quaternion.Euler(StringToVector3(subNode["rot"]));
 						}
 						else{
