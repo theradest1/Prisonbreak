@@ -72,12 +72,20 @@ public class ServerComm : MonoBehaviour
 					if(subNode["ID"] != usrname){
 						GameObject targetPlayer = GameObject.Find(subNode["ID"]);
 						if(targetPlayer != null){
-							Debug.Log(targetPlayer.GetComponent<ClientMovement>().targetPos);// = StringToVector3(subNode["pos"]);
+							ClientMovement movement = targetPlayer.GetComponent<ClientMovement>();
+							if(movement != null){
+								movement.targetPos = StringToVector3(subNode["pos"]);
+								Debug.Log(movement.targetPos);
+							}
 							targetPlayer.transform.rotation = Quaternion.Euler(StringToVector3(subNode["rot"]));
 						}
 						else{
 							targetPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+							ClientMovement movement = targetPlayer.GetComponent<ClientMovement>();
+							movement.player = GameObject.Find(ID.ToString());
 							targetPlayer.name = subNode["ID"];
+							movement.SetUsrname(subNode["name"]);
+							Debug.Log("name: " + subNode["name"]);
 						}
 					}
 				}

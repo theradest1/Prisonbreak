@@ -56,6 +56,8 @@ app.get("/leave/:ID/", (req, res) =>{
 	delete positionalData[req.params["ID"]];
 })
 
+app.get("/event/:event")
+
 app.get("/user/:ID/0", (req, res) =>{
 	var data = {
 		"usrname": "testUsrName",
