@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 267940381}
   - component: {fileID: 267940380}
+  - component: {fileID: 267940382}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -168,6 +169,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &267940382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267940379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125cd2f0e4d9fb041ac28283776c3153, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &295226252
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,11 +244,12 @@ MonoBehaviour:
   usrname: TheMostAmazingUsrname
   ID: 
   team: prisoner
+  level: 0
   playerTransform: {fileID: 2051250512}
   updateDelay: 0.05
-  level: 0
   serverAddress: http://192.168.0.24:3000/
   playerPrefab: {fileID: 7317468777378453335, guid: 770c026d7263c4340a54271a210e4630, type: 3}
+  eventManager: {fileID: 267940382}
 --- !u!4 &311639551
 Transform:
   m_ObjectHideFlags: 0

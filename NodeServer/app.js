@@ -52,7 +52,7 @@ app.get("/leave/:ID", (req, res) =>{
 	delete changingData[req.params["ID"]];
 })
 
-app.get("/event/:info", (req, res) => {
+app.get("/event/:info/:ID", (req, res) => {
 	var event = req.params['info'];
 	res.send("recieved");
 	for(var subNode in changingData){

@@ -16,6 +16,7 @@ public class ServerComm : MonoBehaviour
 	public string serverAddress = "http://192.168.0.24:3000/"; //change this to 75.100.205.73 for other people
 	
 	public GameObject playerPrefab;
+	public EventManager eventManager;
 
     // Start is called before the first frame update
     void Start()
@@ -64,10 +65,10 @@ public class ServerComm : MonoBehaviour
 			else{
 				string data = www.downloadHandler.text;
 				JSONNode processedData = ProcessJSON(data);
-				Debug.Log("Recieved Data: " + processedData.ToString());
+				//Debug.Log("Recieved Data: " + processedData.ToString());
 				foreach (JSONNode subNode in processedData){
 					//Debug.Log("Node: " + subNode.ToString());
-					if(subNode["ID"] != usrname){
+					if(subNode["ID"].ToString() != ID.ToString()){
 						GameObject targetPlayer = GameObject.Find(subNode["ID"]);
 						if(targetPlayer != null){
 							ClientMovement movement = targetPlayer.GetComponent<ClientMovement>();
@@ -83,6 +84,12 @@ public class ServerComm : MonoBehaviour
 							targetPlayer.name = subNode["ID"];
 							movement.SetUsrname(subNode["name"]);
 							Debug.Log("name: " + subNode["name"]);
+						}
+					}
+					else{
+						Debug.Log("Total events: " + subNode["events"].Count);
+						if(subNode["events"].Count > 0){
+							eventManager.rawEvent(subNode["events"].ToString());
 						}
 					}
 				}
