@@ -13,7 +13,7 @@ public class ServerComm : MonoBehaviour
 	public Transform playerTransform;
 	
 	public float updateDelay = .1f;
-	public string serverAddress = "http://192.168.0.24:3000/";
+	public string serverAddress = "http://192.168.0.24:3000/"; //change this to 75.100.205.73 for other people
 	
 	public GameObject playerPrefab;
 
@@ -64,7 +64,7 @@ public class ServerComm : MonoBehaviour
 			else{
 				string data = www.downloadHandler.text;
 				JSONNode processedData = ProcessJSON(data);
-				//Debug.Log("Recieved Data: " + processedData);
+				Debug.Log("Recieved Data: " + processedData.ToString());
 				foreach (JSONNode subNode in processedData){
 					//Debug.Log("Node: " + subNode.ToString());
 					if(subNode["ID"] != usrname){
