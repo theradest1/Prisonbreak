@@ -26,7 +26,7 @@ public class ServerComm : MonoBehaviour
 	IEnumerator Join()
 	{	
 		Debug.Log("Attempting to join");
-		string address = serverAddress + "join/" + usrname + "/" + team + "/";
+		string address = serverAddress + "join/" + usrname + "/" + team;
 		UnityWebRequest www = UnityWebRequest.Get(address);
 		yield return www.SendWebRequest();
 
@@ -55,7 +55,7 @@ public class ServerComm : MonoBehaviour
 	IEnumerator updatePlayers()
 	{
 		while(true){
-			string address = serverAddress + "update/" + playerTransform.position + "/" + playerTransform.rotation.eulerAngles + "/" + ID + "/";
+			string address = serverAddress + "update/" + playerTransform.position + "/" + playerTransform.rotation.eulerAngles + "/" + ID;
 			UnityWebRequest www = UnityWebRequest.Get(address);
 			yield return www.SendWebRequest();
 			//Debug.Log("Made server request: " + address);
@@ -75,7 +75,6 @@ public class ServerComm : MonoBehaviour
 							ClientMovement movement = targetPlayer.GetComponent<ClientMovement>();
 							if(movement != null){
 								movement.targetPos = StringToVector3(subNode["pos"]);
-								Debug.Log(movement.targetPos);
 							}
 							targetPlayer.transform.rotation = Quaternion.Euler(StringToVector3(subNode["rot"]));
 						}
@@ -102,7 +101,7 @@ public class ServerComm : MonoBehaviour
 
 	public IEnumerator LeaveServer()
 	{
-		string address = serverAddress + "leave/" + ID + "/";
+		string address = serverAddress + "leave/" + ID;
 		UnityWebRequest www = UnityWebRequest.Get(address);
 		yield return www.SendWebRequest();
 		Debug.Log("Made server request: " + address);
@@ -124,5 +123,10 @@ public class ServerComm : MonoBehaviour
 		return new Vector3(float.Parse(parts[0]), float.Parse(parts[1]), float.Parse(parts[2]));
 	}
 
-	
+	public IEnumerator Event(string info){
+		string address = serverAddress + "event/" + info;
+		UnityWebRequest www = UnityWebRequest.Get(address);
+		yield return www.SendWebRequest();
+		Debug.Log("Made server request: " + address);
+	}
 }

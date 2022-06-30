@@ -20,5 +20,9 @@ public class gameManager : MonoBehaviour
             print("Space key was pressed; attempting to leave server");
 			StartCoroutine(serverComm.LeaveServer());
         }
+		if(Input.GetKeyDown("q")){
+			print("Sent test event to server");
+			StartCoroutine(serverComm.Event("damage 27 5")); //fake damage event: [event type, damage, ID]
+		}
     }
 }

@@ -9,10 +9,10 @@ var playerData = {};
 var positionalData = {};
 
 app.get("/", (req, res) =>{
-	res.send("Hello World")
+	res.send("Server is up")
 });
 
-app.get("/join/:usrname/:team/", (req, res) =>{
+app.get("/join/:usrname/:team", (req, res) =>{
 	var data = {
 		"name": req.params["usrname"],
 		"team": req.params["team"],
@@ -24,10 +24,9 @@ app.get("/join/:usrname/:team/", (req, res) =>{
 			{ item: "pistol" },
 			{ item: "keycard" }
 		],
-		"events": {}
 	};
 	playerData[IDcounter] = data;
-	positionalData[IDcounter] = {"pos": data["pos"], "rot": data["rot"], "ID": IDcounter};
+	positionalData[IDcounter] = {"pos": data["pos"], "rot": data["rot"], "ID": IDcounter, "events": []};
 	res.json({"ID": IDcounter, "level": 3.7});
 	console.log("Player with ID " + IDcounter + " joined the game.")
 	console.log(playerData);
@@ -44,10 +43,11 @@ app.get("/update/:pos/:rot/:ID", (req, res) => {
 	positionalData[ID].pos = req.params["pos"];
 	positionalData[ID].rot = req.params["rot"];
 	res.json(positionalData); //send only pos, rot, vel for only the other players (change later)
-	console.log(playerData);
+	console.log(positionalData);
+	positionalData[ID].events = [];
 })
 
-app.get("/leave/:ID/", (req, res) =>{
+app.get("/leave/:ID", (req, res) =>{
 	players -= 1;
 	//save data here later
 	res.json("recieved");
@@ -56,7 +56,12 @@ app.get("/leave/:ID/", (req, res) =>{
 	delete positionalData[req.params["ID"]];
 })
 
-app.get("/event/:event")
+app.get("/event/event/:info", (req, res) => {
+	var event = req.params['info'];
+	for(var subNode in positionalData){
+		subNode.events.push(event);
+	}
+})
 
 app.get("/user/:ID/0", (req, res) =>{
 	var data = {
@@ -70,10 +75,6 @@ app.get("/user/:ID/0", (req, res) =>{
 	};
 
 	res.json(data);
-})
-
-app.get("/test/", (req, res) =>{
-	res.json("IT WORKS :D");
 })
 
  

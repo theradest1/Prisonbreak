@@ -7,7 +7,6 @@ using TMPro;
 public class ClientMovement : MonoBehaviour
 {
 	public Vector3 targetPos;
-	//public Vector3 pastPos = Transform.position;
 	public float speed;
 	public bool smooth;
 	public Canvas canvas;
