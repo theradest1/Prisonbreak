@@ -6,7 +6,7 @@ const host = "0.0.0.0";
 var IDcounter = 0;
 var players = 0;
 var playerData = {};
-var positionalData = {};
+var changingData = {};
 
 app.get("/", (req, res) =>{
 	res.send("Hello World")
@@ -16,9 +16,6 @@ app.get("/join/:usrname/:team/", (req, res) =>{
 	var data = {
 		"name": req.params["usrname"],
 		"team": req.params["team"],
-		"pos": "(0, 0, 0)", //Change loc and rot
-		"rot": "(0, 0, 0)",
-		//"vel": "(0, 0, 0)",
 		"level": 3.7, //Get this and inventory from a server-stored JSON file
 		"inventory": [
 			{ item: "pistol" },
@@ -27,7 +24,7 @@ app.get("/join/:usrname/:team/", (req, res) =>{
 		"events": {}
 	};
 	playerData[IDcounter] = data;
-	positionalData[IDcounter] = {"pos": data["pos"], "rot": data["rot"], "ID": IDcounter};
+	changingData[IDcounter] = {"pos": "(0, 0, 0)", "rot": "(0, 0, 0)", "ID": IDcounter};
 	res.json({"ID": IDcounter, "level": 3.7});
 	console.log("Player with ID " + IDcounter + " joined the game.")
 	console.log(playerData);
@@ -38,13 +35,10 @@ app.get("/join/:usrname/:team/", (req, res) =>{
 app.get("/update/:pos/:rot/:ID", (req, res) => {
 	console.log("Recieved Server Request: " + req)
 	var ID = req.params["ID"];
-	playerData[ID].pos = req.params["pos"];
-	playerData[ID].rot = req.params["rot"];
-
-	positionalData[ID].pos = req.params["pos"];
-	positionalData[ID].rot = req.params["rot"];
-	res.json(positionalData); //send only pos, rot, vel for only the other players (change later)
-	console.log(playerData);
+	changingData[ID].pos = req.params["pos"];
+	changingData[ID].rot = req.params["rot"];
+	res.json(changingData); //send only the other players's data later
+	console.log(changingData);
 })
 
 app.get("/leave/:ID/", (req, res) =>{
@@ -53,30 +47,15 @@ app.get("/leave/:ID/", (req, res) =>{
 	res.json("recieved");
 	console.log("Player with ID " + req.params["ID"] + " left the game.");
 	delete playerData[req.params["ID"]];
-	delete positionalData[req.params["ID"]];
+	delete changingData[req.params["ID"]];
 })
 
 app.get("/event/:event")
-
-app.get("/user/:ID/0", (req, res) =>{
-	var data = {
-		"usrname": "testUsrName",
-		"usrID": req.params["ID"],
-		"usrLvl": 3.7,
-		"inventory": [
-			{ item: "pistol" },
-			{ item: "keycard" }
-		]
-	};
-
-	res.json(data);
-})
 
 app.get("/test/", (req, res) =>{
 	res.json("IT WORKS :D");
 })
 
- 
 app.listen(port, host, () => {
 	console.log("Server started on port " + port)
 });
