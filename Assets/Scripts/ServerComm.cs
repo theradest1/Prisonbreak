@@ -13,7 +13,7 @@ public class ServerComm : MonoBehaviour
 	//public Rigidbody playerRB;
 	public float updateDelay = .1f;
 	public float level;
-	string serverAddress = "http://192.168.0.24:8000/";
+	public string serverAddress = "http://192.168.0.24:3000/";
 	public GameObject playerPrefab;
 
     // Start is called before the first frame update

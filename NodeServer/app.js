@@ -1,7 +1,7 @@
 const express = require('express')
 
 const app = express();
-const port = 8000;
+const port = 3000;
 const host = "0.0.0.0";
 var IDcounter = 0;
 var players = 0;
@@ -69,7 +69,11 @@ app.get("/user/:ID/0", (req, res) =>{
 		]
 	};
 
-	res.json(data)
+	res.json(data);
+})
+
+app.get("/test/", (req, res) =>{
+	res.json("IT WORKS :D");
 })
 
  
