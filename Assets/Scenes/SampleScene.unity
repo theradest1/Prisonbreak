@@ -232,8 +232,9 @@ MonoBehaviour:
   ID: 
   team: prisoner
   playerTransform: {fileID: 2051250512}
-  updateDelay: 0.1
+  updateDelay: 0.05
   level: 0
+  serverAddress: http://192.168.0.24:3000/
   playerPrefab: {fileID: 7317468777378453335, guid: 770c026d7263c4340a54271a210e4630, type: 3}
 --- !u!4 &311639551
 Transform:
