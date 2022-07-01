@@ -7,7 +7,6 @@ var IDcounter = 0;
 var players = 0;
 var playerData = {};
 var changingData = {};
-var playerEvents = [];
 
 app.get("/", (req, res) =>{
 	res.send("Server is up")
@@ -23,10 +22,16 @@ app.get("/join/:usrname/:team", (req, res) =>{
 			{ item: "keycard" }
 		],
 	};
-	playerData[IDcounter] = data;
-	changingData[IDcounter] = {"pos": "(0, 0, 0)", "rot": "(0, 0, 0)", "events": [], "ID": IDcounter};
-	res.json({"ID": IDcounter, "level": 3.7});
-	console.log("Player with ID " + IDcounter + " joined the game.")
+	var ID = IDcounter;
+	playerData[ID] = data;
+	changingData[ID] = {"pos": "(0, 0, 0)", "rot": "(0, 0, 0)", "events": [], "ID": ID};
+	res.json({"ID": ID, "level": 3.7});
+	for(var subNode in changingData){
+		if(ID.toString != subNode["ID"]){
+			changingData[subNode].events.push("join " + ID + " " + req.params["usrname"] + " " + req.params["team"]);
+		}
+	}
+	console.log("Player with ID " + ID + " joined the game.");
 	console.log(playerData);
 	players += 1;
 	IDcounter += 1;
@@ -47,12 +52,16 @@ app.get("/leave/:ID", (req, res) =>{
 	players -= 1;
 	//save data here later
 	res.send("recieved");
-	console.log("Player with ID " + req.params["ID"] + " left the game.");
-	delete playerData[req.params["ID"]];
-	delete changingData[req.params["ID"]];
+	var ID = req.params["ID"]
+	console.log("Player with ID " + ID + " left the game.");
+	delete playerData[ID];
+	delete changingData[ID];
+	for(var subNode in changingData){
+		changingData[subNode].events.push("leave " + ID);
+	}
 })
 
-app.get("/event/:info/:ID", (req, res) => {
+app.get("/event/:info", (req, res) => {
 	var event = req.params['info'];
 	res.send("recieved");
 	for(var subNode in changingData){

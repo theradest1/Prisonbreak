@@ -14,8 +14,7 @@ public class ServerComm : MonoBehaviour
 	
 	public float updateDelay = .1f;
 	public string serverAddress = "http://192.168.0.24:3000/"; //change this to 75.100.205.73 for other people
-	
-	public GameObject playerPrefab;
+
 	public EventManager eventManager;
 
     // Start is called before the first frame update
@@ -77,14 +76,6 @@ public class ServerComm : MonoBehaviour
 							}
 							targetPlayer.transform.rotation = Quaternion.Euler(StringToVector3(subNode["rot"]));
 						}
-						else{
-							targetPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-							ClientMovement movement = targetPlayer.GetComponent<ClientMovement>();
-							movement.player = GameObject.Find(ID.ToString());
-							targetPlayer.name = subNode["ID"];
-							movement.SetUsrname(subNode["name"]);
-							Debug.Log("name: " + subNode["name"]);
-						}
 					}
 					else{
 						Debug.Log("Total events: " + subNode["events"].Count);
@@ -130,7 +121,7 @@ public class ServerComm : MonoBehaviour
 	}
 
 	public IEnumerator Event(string info){
-		string address = serverAddress + "event/" + info + "/" + ID;
+		string address = serverAddress + "event/" + info;
 		UnityWebRequest www = UnityWebRequest.Get(address);
 		yield return www.SendWebRequest();
 		Debug.Log("Made server request: " + address);

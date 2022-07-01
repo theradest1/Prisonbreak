@@ -181,6 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 125cd2f0e4d9fb041ac28283776c3153, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 7317468777378453335, guid: 770c026d7263c4340a54271a210e4630, type: 3}
+  serverComm: {fileID: 311639550}
 --- !u!1 &295226252
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +250,6 @@ MonoBehaviour:
   playerTransform: {fileID: 2051250512}
   updateDelay: 0.05
   serverAddress: http://192.168.0.24:3000/
-  playerPrefab: {fileID: 7317468777378453335, guid: 770c026d7263c4340a54271a210e4630, type: 3}
   eventManager: {fileID: 267940382}
 --- !u!4 &311639551
 Transform:
