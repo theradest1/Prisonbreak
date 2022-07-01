@@ -78,7 +78,7 @@ public class ServerComm : MonoBehaviour
 						}
 					}
 					else{
-						Debug.Log("Total events: " + subNode["events"].Count);
+						//Debug.Log("Total events: " + subNode["events"].Count);
 						if(subNode["events"].Count > 0){
 							eventManager.rawEvents(subNode["events"].ToString());
 							Debug.Log("Event recieved: " + subNode["events"].ToString());

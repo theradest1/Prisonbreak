@@ -27,12 +27,20 @@ app.get("/join/:usrname/:team", (req, res) =>{
 	changingData[ID] = {"pos": "(0, 0, 0)", "rot": "(0, 0, 0)", "events": [], "ID": ID};
 	res.json({"ID": ID, "level": 3.7});
 	for(var subNode in changingData){
-		if(ID.toString != subNode["ID"]){
+		if(ID != subNode){
 			changingData[subNode].events.push("join " + ID + " " + req.params["usrname"] + " " + req.params["team"]);
+		}
+		else{
+			for(var ID_ in changingData){
+				if(ID != ID_){
+					changingData[ID].events.push("join " + ID_ + " " + playerData[ID_].name + " " + playerData[ID_].team);
+				}
+			}
 		}
 	}
 	console.log("Player with ID " + ID + " joined the game.");
 	console.log(playerData);
+	console.log(changingData);
 	players += 1;
 	IDcounter += 1;
 })

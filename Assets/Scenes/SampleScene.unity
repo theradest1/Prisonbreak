@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feebea300a2fcf440af9d7fabd2b78a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usrname: TheMostAmazingUsrname
+  usrname: TheBetterestName
   ID: 
   team: prisoner
   level: 0
