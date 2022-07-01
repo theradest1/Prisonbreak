@@ -89,7 +89,8 @@ public class ServerComm : MonoBehaviour
 					else{
 						Debug.Log("Total events: " + subNode["events"].Count);
 						if(subNode["events"].Count > 0){
-							eventManager.rawEvent(subNode["events"].ToString());
+							eventManager.rawEvents(subNode["events"].ToString());
+							Debug.Log("Event recieved: " + subNode["events"].ToString());
 						}
 					}
 				}
@@ -129,7 +130,7 @@ public class ServerComm : MonoBehaviour
 	}
 
 	public IEnumerator Event(string info){
-		string address = serverAddress + "event/" + info;
+		string address = serverAddress + "event/" + info + "/" + ID;
 		UnityWebRequest www = UnityWebRequest.Get(address);
 		yield return www.SendWebRequest();
 		Debug.Log("Made server request: " + address);
