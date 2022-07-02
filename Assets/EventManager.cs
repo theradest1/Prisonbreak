@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
-	string[] eventData;
 	public GameObject playerPrefab;
 	public ServerComm serverComm;
 
@@ -13,32 +12,45 @@ public class EventManager : MonoBehaviour
 		string[] events = eventString.Split(',');
 		foreach (string indiEvent in events)
     	{
-			Debug.Log(indiEvent);
+			//Debug.Log(indiEvent);
 			string pureEvent = indiEvent.Substring(1, indiEvent.Length-2); //get rid of quotations (from the server sending a list that was converted to a string full of strings)
-            Debug.Log(pureEvent);
-			eventData = pureEvent.Split(' ');
-			Invoke(eventData[0], 0);
+            //Debug.Log(pureEvent);
+			string[] eventData = pureEvent.Split(' ');
+			switch(eventData[0]){
+				case "damage":
+					Debug.Log("damage event");
+					damage(eventData[1], eventData[2]);
+					break;
+				case "leave":
+					Debug.Log("leave event");
+					leave(eventData[1]);
+					break;
+				case "join":
+					Debug.Log("join event");
+					join(eventData[1], eventData[2], eventData[3]);
+					break;
+			}
         }
 	}
 
 
 	//These events are not specifically for this client, Ex: leave() is not if this client leaves
-	void damage(){
-		Debug.Log("Damaged player with ID " + eventData[1] + " for " + eventData[2] + " health"); //damaged player's ID, damage
+	void damage(string ID, string damage){
+		Debug.Log("Damaged player with ID " + ID + " for " + damage + " health"); //damaged player's ID, damage
 	}
 
-	void leave(){
-		Debug.Log("Player with ID " + eventData[1] + " has left the game"); //Player's ID
-		Destroy(GameObject.Find(eventData[1]));
+	void leave(string ID){
+		Debug.Log("Player with ID " + ID + " has left the game"); //Player's ID
+		Destroy(GameObject.Find(ID));
 	}
 
-	void join(){
-		Debug.Log("Player with ID " + eventData[1] + " has joined the game with usraname " + eventData[2] + " and are a " + eventData[3]); //ID, usraname, team
+	void join(string ID, string usrname, string team){
+		Debug.Log("Player with ID " + ID + " has joined the game with usraname " + usrname + " and are a " + team); //ID, usraname, team
 		GameObject targetPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
 		ClientMovement movement = targetPlayer.GetComponent<ClientMovement>();
 		movement.player = GameObject.Find(serverComm.ID.ToString()); //letting the other player's object know who the client here is
-		targetPlayer.name = eventData[1];
-		movement.SetUsrname(eventData[2]);
+		targetPlayer.name = ID;
+		movement.SetUsrname(usrname);
 	}
 }
