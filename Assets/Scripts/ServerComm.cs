@@ -9,24 +9,24 @@ public class ServerComm : MonoBehaviour
 	public string usrname = "TheMostAmazingUsrname";
 	public string ID;
 	public string team = "prisoner";
-	public Transform playerTransform;
-	//public Rigidbody playerRB;
-	public float updateDelay = .1f;
 	public float level;
-	string serverAddress = "http://192.168.0.24:8000/";
-	public GameObject playerPrefab;
+	public Transform playerTransform;
+	
+	public float updateDelay = .1f;
+	public string serverAddress = "http://192.168.0.24:3000/"; //change this to 75.100.205.73 for other people
+
+	public EventManager eventManager;
 
     // Start is called before the first frame update
     void Start()
     {
 		StartCoroutine(Join());
-		//StartCoroutine(GetWebData("http://localhost:8000/user/", 320));
     }
 
 	IEnumerator Join()
 	{	
 		Debug.Log("Attempting to join");
-		string address = serverAddress + "join/" + usrname + "/" + team + "/";
+		string address = serverAddress + "join/" + usrname + "/" + team;
 		UnityWebRequest www = UnityWebRequest.Get(address);
 		yield return www.SendWebRequest();
 
@@ -39,14 +39,12 @@ public class ServerComm : MonoBehaviour
 		else{
 			Debug.Log("Joined server succesfully");
 			string data = www.downloadHandler.text;
-			Debug.Log("Response: " + data);
 
 			JSONNode processedData = ProcessJSON(data);
 			ID = processedData["ID"];
 			playerTransform.position = new Vector3(0f, 0f, 0f); //change to get from node
 			level = processedData["level"];
 
-			Debug.Log("Started multiplayer communication");
 			GameObject.Find("Player").name = ID;
 			StartCoroutine(updatePlayers());
 		}
@@ -55,10 +53,10 @@ public class ServerComm : MonoBehaviour
 	IEnumerator updatePlayers()
 	{
 		while(true){
-			string address = serverAddress + "update/" + playerTransform.position + "/" + playerTransform.rotation.eulerAngles + "/" + ID + "/";
+			string address = serverAddress + "update/" + playerTransform.position + "/" + playerTransform.rotation.eulerAngles + "/" + ID;
 			UnityWebRequest www = UnityWebRequest.Get(address);
 			yield return www.SendWebRequest();
-			Debug.Log("Made server request: " + address);
+			//Debug.Log("Made server request: " + address);
 
 			if(www.result != UnityWebRequest.Result.Success){
 				Debug.LogError("Somethig Went wrong: " + www.error);
@@ -66,18 +64,24 @@ public class ServerComm : MonoBehaviour
 			else{
 				string data = www.downloadHandler.text;
 				JSONNode processedData = ProcessJSON(data);
-				//Debug.Log("Recieved Data: " + processedData);
+				//Debug.Log("Recieved Data: " + processedData.ToString());
 				foreach (JSONNode subNode in processedData){
 					//Debug.Log("Node: " + subNode.ToString());
-					if(subNode["ID"] != usrname){
+					if(subNode["ID"].ToString() != ID.ToString()){
 						GameObject targetPlayer = GameObject.Find(subNode["ID"]);
 						if(targetPlayer != null){
-							targetPlayer.transform.position = StringToVector3(subNode["pos"]);
+							ClientMovement movement = targetPlayer.GetComponent<ClientMovement>();
+							if(movement != null){
+								movement.targetPos = StringToVector3(subNode["pos"]);
+							}
 							targetPlayer.transform.rotation = Quaternion.Euler(StringToVector3(subNode["rot"]));
 						}
-						else{
-							targetPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-							targetPlayer.name = subNode["ID"];
+					}
+					else{
+						//Debug.Log("Total events: " + subNode["events"].Count);
+						if(subNode["events"].Count > 0){
+							eventManager.rawEvents(subNode["events"].ToString());
+							Debug.Log("Event recieved: " + subNode["events"].ToString());
 						}
 					}
 				}
@@ -94,7 +98,7 @@ public class ServerComm : MonoBehaviour
 
 	public IEnumerator LeaveServer()
 	{
-		string address = serverAddress + "leave/" + ID + "/";
+		string address = serverAddress + "leave/" + ID;
 		UnityWebRequest www = UnityWebRequest.Get(address);
 		yield return www.SendWebRequest();
 		Debug.Log("Made server request: " + address);
@@ -116,5 +120,10 @@ public class ServerComm : MonoBehaviour
 		return new Vector3(float.Parse(parts[0]), float.Parse(parts[1]), float.Parse(parts[2]));
 	}
 
-	
+	public IEnumerator Event(string info){
+		string address = serverAddress + "event/" + info;
+		UnityWebRequest www = UnityWebRequest.Get(address);
+		yield return www.SendWebRequest();
+		Debug.Log("Made server request: " + address);
+	}
 }

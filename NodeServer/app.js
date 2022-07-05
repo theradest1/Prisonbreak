@@ -1,76 +1,83 @@
 const express = require('express')
 
 const app = express();
-const port = 8000;
+const port = 3000;
 const host = "0.0.0.0";
 var IDcounter = 0;
 var players = 0;
 var playerData = {};
-var positionalData = {};
+var changingData = {};
 
 app.get("/", (req, res) =>{
-	res.send("Hello World")
+	res.send("Server is up")
 });
 
-app.get("/join/:usrname/:team/", (req, res) =>{
+app.get("/join/:usrname/:team", (req, res) =>{
 	var data = {
 		"name": req.params["usrname"],
 		"team": req.params["team"],
-		"pos": "(0, 0, 0)", //Change loc and rot
-		"rot": "(0, 0, 0)",
-		//"vel": "(0, 0, 0)",
 		"level": 3.7, //Get this and inventory from a server-stored JSON file
 		"inventory": [
 			{ item: "pistol" },
 			{ item: "keycard" }
 		],
-		"events": {}
 	};
-	playerData[IDcounter] = data;
-	positionalData[IDcounter] = {"pos": data["pos"], "rot": data["rot"], "ID": IDcounter};
-	res.json({"ID": IDcounter, "level": 3.7});
-	console.log("Player with ID " + IDcounter + " joined the game.")
+	var ID = IDcounter;
+	playerData[ID] = data;
+	changingData[ID] = {"pos": "(0, 0, 0)", "rot": "(0, 0, 0)", "events": [], "ID": ID};
+	res.json({"ID": ID, "level": 3.7});
+	for(var subNode in changingData){
+		if(ID != subNode){
+			changingData[subNode].events.push("join " + ID + " " + req.params["usrname"] + " " + req.params["team"]);
+		}
+		else{
+			for(var ID_ in changingData){
+				if(ID != ID_){
+					changingData[ID].events.push("join " + ID_ + " " + playerData[ID_].name + " " + playerData[ID_].team);
+				}
+			}
+		}
+	}
+	console.log("Player with ID " + ID + " joined the game.");
 	console.log(playerData);
+	console.log(changingData);
 	players += 1;
 	IDcounter += 1;
 })
 
 app.get("/update/:pos/:rot/:ID", (req, res) => {
-	console.log("Recieved Server Request: " + req)
+	//console.log("Recieved Server Request: " + req)
 	var ID = req.params["ID"];
-	playerData[ID].pos = req.params["pos"];
-	playerData[ID].rot = req.params["rot"];
 
-	positionalData[ID].pos = req.params["pos"];
-	positionalData[ID].rot = req.params["rot"];
-	res.json(positionalData); //send only pos, rot, vel for only the other players (change later)
-	console.log(playerData);
+	changingData[ID].pos = req.params["pos"];
+	changingData[ID].rot = req.params["rot"];
+	res.json(changingData); //send only the other players's data later
+	//console.log(changingData);
+	changingData[ID].events = [];
 })
 
-app.get("/leave/:ID/", (req, res) =>{
+app.get("/leave/:ID", (req, res) =>{
 	players -= 1;
 	//save data here later
-	res.json("recieved");
-	console.log("Player with ID " + req.params["ID"] + " left the game.");
-	delete playerData[req.params["ID"]];
-	delete positionalData[req.params["ID"]];
+	res.send("recieved");
+	var ID = req.params["ID"]
+	console.log("Player with ID " + ID + " left the game.");
+	delete playerData[ID];
+	delete changingData[ID];
+	for(var subNode in changingData){
+		changingData[subNode].events.push("leave " + ID);
+	}
 })
 
-app.get("/user/:ID/0", (req, res) =>{
-	var data = {
-		"usrname": "testUsrName",
-		"usrID": req.params["ID"],
-		"usrLvl": 3.7,
-		"inventory": [
-			{ item: "pistol" },
-			{ item: "keycard" }
-		]
-	};
-
-	res.json(data)
+app.get("/event/:info", (req, res) => {
+	var event = req.params['info'];
+	res.send("recieved");
+	for(var subNode in changingData){
+		changingData[subNode].events.push(event);
+	}
+	console.log(changingData);
 })
 
- 
 app.listen(port, host, () => {
-	console.log("Server started on port " + port)
+	console.log("Server started on port " + port);
 });
