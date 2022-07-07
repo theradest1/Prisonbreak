@@ -27,16 +27,16 @@ MonoBehaviour:
     value: 9
   keyValue:
     overrideState: 1
-    value: 0.06
+    value: 0.4
   eyeAdaptation:
     overrideState: 0
     value: 0
   speedUp:
-    overrideState: 0
-    value: 2
+    overrideState: 1
+    value: 3
   speedDown:
-    overrideState: 0
-    value: 1
+    overrideState: 1
+    value: 3
 --- !u!114 &-3044128066540214805
 MonoBehaviour:
   m_ObjectHideFlags: 3
