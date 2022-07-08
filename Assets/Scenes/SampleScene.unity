@@ -590,6 +590,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 7317468777378453335, guid: 770c026d7263c4340a54271a210e4630, type: 3}
   serverComm: {fileID: 311639550}
+  gameManager: {fileID: 267940380}
 --- !u!114 &267940383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,7 +626,7 @@ MonoBehaviour:
   - {fileID: 658112513}
   gunHolder: {fileID: 1408386566}
   cam: {fileID: 963194225}
-  gunLerpSpeed: 0.2
+  gunLerpSpeed: 150
   gunID: 0
   gameManager: {fileID: 267940380}
   hitMask:

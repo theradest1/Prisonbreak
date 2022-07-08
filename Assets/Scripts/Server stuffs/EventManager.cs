@@ -6,6 +6,7 @@ public class EventManager : MonoBehaviour
 {
 	public GameObject playerPrefab;
 	public ServerComm serverComm;
+	public GameManager gameManager;
 
     public void rawEvents(string eventString){
 		eventString = eventString.Substring(1, eventString.Length-2); //get rid of brackets
@@ -37,9 +38,17 @@ public class EventManager : MonoBehaviour
 	//These events are not specifically for this client, Ex: leave() is not if this client leaves
 	void damage(string ID, string damage){
 		Debug.Log("Damaged player with ID " + ID + " for " + damage + " health"); //damaged player's ID, damage
-		ClientMovement hitPlayerScript = GameObject.Find(ID.ToString()).GetComponent<ClientMovement>();
-		hitPlayerScript.health -= int.Parse(damage);
-		hitPlayerScript.updateHealth();
+		float fDamage = int.Parse(damage);
+		if(ID != serverComm.ID){
+			ClientMovement hitPlayerScript = GameObject.Find(ID).GetComponent<ClientMovement>();
+			hitPlayerScript.health -= fDamage;
+			hitPlayerScript.updateHealth();
+		}
+		else{
+			gameManager.health -= fDamage;
+			gameManager.updateGUI();
+		}
+		
 	}
 
 	void leave(string ID){
