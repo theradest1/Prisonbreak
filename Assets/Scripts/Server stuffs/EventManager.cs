@@ -37,6 +37,9 @@ public class EventManager : MonoBehaviour
 	//These events are not specifically for this client, Ex: leave() is not if this client leaves
 	void damage(string ID, string damage){
 		Debug.Log("Damaged player with ID " + ID + " for " + damage + " health"); //damaged player's ID, damage
+		ClientMovement hitPlayerScript = GameObject.Find(ID.ToString()).GetComponent<ClientMovement>();
+		hitPlayerScript.health -= int.Parse(damage);
+		hitPlayerScript.updateHealth();
 	}
 
 	void leave(string ID){

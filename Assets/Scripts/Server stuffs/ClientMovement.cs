@@ -11,10 +11,15 @@ public class ClientMovement : MonoBehaviour
 	public bool smooth;
 	public Canvas canvas;
 	public TextMeshProUGUI nameText;
+	public TextMeshProUGUI healthText;
 	public GameObject player;
+	public float health;
 
 	public void SetUsrname(string usrname){
 		nameText.text = usrname;
+	}
+	public void updateHealth(){
+		healthText.text = health.ToString();
 	}
     // Update is called once per frame
     void Update()

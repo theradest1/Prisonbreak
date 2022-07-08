@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 		//input
         if (Input.GetKeyDown("escape"))
         {
-            print("Space key was pressed; attempting to leave server");
+            print("attempting to leave server");
 			StartCoroutine(serverComm.LeaveServer());
         }
 
@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 		if(Input.GetKey(KeyCode.Mouse0)){
 			gunManager.shoot();
 		}
+
 		if(Input.GetKeyDown("r")){
 			gunManager.reload();
 		}
@@ -40,5 +41,13 @@ public class GameManager : MonoBehaviour
 	public void updateGUI(){
 		healthGUI.text = health.ToString();
 		bulletsGUI.text = gunManager.bullets.ToString();
+	}
+
+	public GameObject getLookedAtObject(GameObject cam, LayerMask mask){
+		if(Physics.Raycast(cam.transform.position, cam.transform.forward, out var hit, Mathf.Infinity, mask)){
+			GameObject obj = hit.collider.gameObject;
+			return obj;
+		}
+		return null;
 	}
 }

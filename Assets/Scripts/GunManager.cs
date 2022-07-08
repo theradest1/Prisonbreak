@@ -5,13 +5,15 @@ using UnityEngine;
 public class GunManager : MonoBehaviour
 {
 	public int bullets;
-	public int totalBullets;
 	public List<GameObject> gunObjects;
-	public List<GunInfo> gunInfos;
+	List<GunInfo> gunInfos = new List<GunInfo>();
 	public GameObject gunHolder;
 	public GameObject cam;
 	public int gunID = 0;
 	public GameManager gameManager;
+	float actionTimer;
+	public LayerMask hitMask;
+	public ServerComm serverComm;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,24 +27,38 @@ public class GunManager : MonoBehaviour
     void Update()
     {
         gunHolder.transform.rotation = cam.transform.rotation;
+		if(actionTimer >0){
+			actionTimer -= Time.deltaTime;
+		}
     }
 
 	public void shoot(){
-		if(bullets > 0){
-			Debug.Log("Bang!!!!");
+		if(bullets > 0 && actionTimer <= 0){
+			//Debug.Log("Bang!!!!");
+			GameObject hitObject = gameManager.getLookedAtObject(cam, hitMask);
+			if(hitObject != null){
+				if(hitObject.GetComponent<ClientMovement>() != null){
+					Debug.Log("Hit player with ID " + hitObject.name + " for " + gunInfos[gunID].damage.ToString() + " damage");
+					StartCoroutine(serverComm.Event("damage " + hitObject.name + " " + gunInfos[gunID].damage.ToString()));
+				}
+			}
 			bullets -= 1;
 			gameManager.updateGUI();
 			gunInfos[gunID].shoot.Play();
+			actionTimer += gunInfos[gunID].shootDelay;
 			return;
 		}
 		reload();
 	}
 
 	public void reload(){
-		Debug.Log("Reload");
-		bullets = totalBullets;
-		gameManager.updateGUI();
-		gunInfos[gunID].reload.Play();
+		if(actionTimer <= 0){
+			//Debug.Log("Reload");
+			bullets = gunInfos[gunID].totalBullets;
+			gameManager.updateGUI();
+			gunInfos[gunID].reload.Play();
+			actionTimer += gunInfos[gunID].reloadTime;
+		}
 	}
 
 	public void changeGun(int newGunID){
@@ -51,5 +67,6 @@ public class GunManager : MonoBehaviour
 			gun.SetActive(false);
 		}
 		gunObjects[newGunID].SetActive(true);
+		reload();
 	}
 }

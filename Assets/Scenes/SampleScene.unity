@@ -264,7 +264,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh20674
+  m_Name: pb_Mesh20684
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -620,15 +620,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullets: 10
-  totalBullets: 10
   gunObjects:
   - {fileID: 660236740}
   - {fileID: 658112513}
-  gunInfos: []
   gunHolder: {fileID: 1408386566}
   cam: {fileID: 963194225}
   gunID: 0
   gameManager: {fileID: 267940380}
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 247
+  serverComm: {fileID: 311639550}
 --- !u!1 &273754548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2719,7 +2721,7 @@ MonoBehaviour:
   level: 0
   playerTransform: {fileID: 2051250512}
   updateDelay: 0.05
-  localNetwork: 0
+  localNetwork: 1
   eventManager: {fileID: 267940382}
 --- !u!4 &311639551
 Transform:
@@ -2950,8 +2952,12 @@ MonoBehaviour:
   damage: 1
   kickback: 1
   volume: 1
+  totalBullets: 10
+  reloadTime: 0.7
+  shootDelay: 0.2
   shoot: {fileID: 442011114}
   reload: {fileID: 2135380079}
+  automatic: 0
 --- !u!1001 &660236738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3035,11 +3041,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2570cbc3acc2d34a9bf2dbc375999c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  kickback: 0
-  volume: 0
+  damage: 1
+  kickback: 1
+  volume: 1
+  totalBullets: 30
+  reloadTime: 1
+  shootDelay: 0.07
   shoot: {fileID: 904136807}
   reload: {fileID: 273754550}
+  automatic: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
