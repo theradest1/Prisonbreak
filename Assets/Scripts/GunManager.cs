@@ -9,6 +9,7 @@ public class GunManager : MonoBehaviour
 	List<GunInfo> gunInfos = new List<GunInfo>();
 	public GameObject gunHolder;
 	public GameObject cam;
+	public float gunLerpSpeed;
 	public int gunID = 0;
 	public GameManager gameManager;
 	float actionTimer;
@@ -26,7 +27,7 @@ public class GunManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gunHolder.transform.rotation = cam.transform.rotation;
+		gunHolder.transform.rotation = Quaternion.RotateTowards(gunHolder.transform.rotation, cam.transform.rotation, gunLerpSpeed * Time.deltaTime);
 		if(actionTimer >0){
 			actionTimer -= Time.deltaTime;
 		}
