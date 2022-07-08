@@ -7,6 +7,7 @@ public class GunManager : MonoBehaviour
 	public int bullets;
 	public int totalBullets;
 	public List<GameObject> gunObjects;
+	public List<GunInfo> gunInfos;
 	public GameObject gunHolder;
 	public GameObject cam;
 	public int gunID = 0;
@@ -14,7 +15,10 @@ public class GunManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        for(int i = 0; i < gunObjects.Count; i++){
+			gunInfos.Add(gunObjects[i].GetComponent<GunInfo>());
+			Debug.Log(gunObjects[i]);
+		}
     }
 
     // Update is called once per frame
@@ -28,6 +32,7 @@ public class GunManager : MonoBehaviour
 			Debug.Log("Bang!!!!");
 			bullets -= 1;
 			gameManager.updateGUI();
+			gunInfos[gunID].shoot.Play();
 			return;
 		}
 		reload();
@@ -37,9 +42,11 @@ public class GunManager : MonoBehaviour
 		Debug.Log("Reload");
 		bullets = totalBullets;
 		gameManager.updateGUI();
+		gunInfos[gunID].reload.Play();
 	}
 
 	public void changeGun(int newGunID){
+		gunID = newGunID;
 		foreach(GameObject gun in gunObjects){
 			gun.SetActive(false);
 		}

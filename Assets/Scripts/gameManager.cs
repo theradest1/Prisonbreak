@@ -11,11 +11,6 @@ public class GameManager : MonoBehaviour
 	public TextMeshProUGUI healthGUI;
 	public TextMeshProUGUI bulletsGUI;
 	public GunManager gunManager;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -28,7 +23,7 @@ public class GameManager : MonoBehaviour
         }
 
 		//gun input stuffs
-		if(Input.GetKeyDown(KeyCode.Mouse0)){
+		if(Input.GetKey(KeyCode.Mouse0)){
 			gunManager.shoot();
 		}
 		if(Input.GetKeyDown("r")){
