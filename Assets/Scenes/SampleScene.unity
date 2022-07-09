@@ -264,7 +264,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25708
+  m_Name: pb_Mesh20650
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -644,7 +644,6 @@ MonoBehaviour:
   - {fileID: 1541233285}
   gunHolder: {fileID: 1408386566}
   cam: {fileID: 963194225}
-  gunLerpSpeed: 150
   gunID: 0
   gameManager: {fileID: 267940380}
   hitMask:
@@ -2791,12 +2790,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   kickback: 1
+  recoverySpeed: 15
   volume: 1
   totalBullets: 10
   reloadTime: 0.7
   shootDelay: 0.2
-  shootSoundID: 0
-  reloadSoundID: 0
+  shootSoundID: 4
+  reloadSoundID: 1
   automatic: 0
 --- !u!1001 &660236738
 PrefabInstance:
@@ -2882,13 +2882,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  kickback: 1
+  kickback: 12
+  recoverySpeed: 10
   volume: 1
   totalBullets: 30
   reloadTime: 1
   shootDelay: 0.07
-  shootSoundID: 1
-  reloadSoundID: 2
+  shootSoundID: 2
+  reloadSoundID: 12
   automatic: 1
 --- !u!1 &705507993
 GameObject:
@@ -3311,7 +3312,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1408386566}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3344,14 +3345,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2570cbc3acc2d34a9bf2dbc375999c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 4356
-  kickback: 20
+  damage: 60
+  kickback: 100
+  recoverySpeed: 2
   volume: 0
-  totalBullets: 345
+  totalBullets: 6
   reloadTime: 3
-  shootDelay: 0.01
+  shootDelay: 1.5
   shootSoundID: 0
-  reloadSoundID: 0
+  reloadSoundID: 12
   automatic: 0
 --- !u!1001 &1629384291
 PrefabInstance:
