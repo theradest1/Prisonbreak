@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour
 		if(Input.GetKeyDown("2")){
 			gunManager.changeGun(1);
 		}
+		if(Input.GetKeyDown("3")){
+			gunManager.changeGun(2);
+		}		
     }
 
 	public void updateGUI(){
