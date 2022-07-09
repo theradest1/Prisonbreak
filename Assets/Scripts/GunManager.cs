@@ -9,7 +9,6 @@ public class GunManager : MonoBehaviour
 	List<GunInfo> gunInfos = new List<GunInfo>();
 	public GameObject gunHolder;
 	public GameObject cam;
-	public float gunLerpSpeed;
 	public int gunID = 0;
 	public GameManager gameManager;
 	float actionTimer;
@@ -27,16 +26,17 @@ public class GunManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		gunHolder.transform.rotation = Quaternion.RotateTowards(gunHolder.transform.rotation, cam.transform.rotation, gunLerpSpeed * Time.deltaTime);
+		gunHolder.transform.rotation = Quaternion.RotateTowards(gunHolder.transform.rotation, cam.transform.rotation, gunInfos[gunID].recoverySpeed * Quaternion.Angle(gunHolder.transform.rotation, cam.transform.rotation) * Time.deltaTime);
 		if(actionTimer >0){
 			actionTimer -= Time.deltaTime;
 		}
+		Debug.DrawRay(gunHolder.transform.position, gunHolder.transform.forward * 99999f, Color.red);
     }
 
 	public void shoot(){
 		if(bullets > 0 && actionTimer <= 0){
 			//Debug.Log("Bang!!!!");
-			GameObject hitObject = gameManager.getLookedAtObject(cam, hitMask);
+			GameObject hitObject = gameManager.getLookedAtObject(gunHolder, hitMask);
 			if(hitObject != null){
 				if(hitObject.GetComponent<ClientMovement>() != null){
 					Debug.Log("Hit player with ID " + hitObject.name + " for " + gunInfos[gunID].damage.ToString() + " damage");
@@ -46,7 +46,8 @@ public class GunManager : MonoBehaviour
 			bullets -= 1;
 			gameManager.updateGUI();
 			actionTimer += gunInfos[gunID].shootDelay;
-			StartCoroutine(serverComm.Event("sound " + gunInfos[gunID].shootSoundID.ToString() + " " + gunObjects[gunID].transform.position.x.ToString() + " " + gunObjects[gunID].transform.position.y.ToString() + " " + gunObjects[gunID].transform.position.x.ToString()));
+			gunHolder.transform.Rotate(-gunInfos[gunID].kickback, 0f, 0f, Space.Self);
+			StartCoroutine(serverComm.Event("sound " + gunInfos[gunID].shootSoundID.ToString() + " " + gunObjects[gunID].transform.position.x.ToString() + " " + gunObjects[gunID].transform.position.y.ToString() + " " + gunObjects[gunID].transform.position.z.ToString()));
 			return;
 		}
 		reload();
@@ -58,7 +59,7 @@ public class GunManager : MonoBehaviour
 			bullets = gunInfos[gunID].totalBullets;
 			gameManager.updateGUI();
 			actionTimer += gunInfos[gunID].reloadTime;
-			StartCoroutine(serverComm.Event("sound " + gunInfos[gunID].reloadSoundID.ToString() + " " + gunObjects[gunID].transform.position.x.ToString() + " " + gunObjects[gunID].transform.position.y.ToString() + " " + gunObjects[gunID].transform.position.x.ToString()));
+			StartCoroutine(serverComm.Event("sound " + gunInfos[gunID].reloadSoundID.ToString() + " " + gunObjects[gunID].transform.position.x.ToString() + " " + gunObjects[gunID].transform.position.y.ToString() + " " + gunObjects[gunID].transform.position.z.ToString()));
 		}
 	}
 
@@ -68,6 +69,7 @@ public class GunManager : MonoBehaviour
 			gun.SetActive(false);
 		}
 		gunObjects[newGunID].SetActive(true);
+		actionTimer = 0;
 		reload();
 	}
 }

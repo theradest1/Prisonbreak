@@ -6,6 +6,7 @@ public class GunInfo : MonoBehaviour
 {
 	public float damage;
 	public float kickback;
+	public float recoverySpeed;
 	public float volume;
 	public int totalBullets;
 	public float reloadTime;
