@@ -23,6 +23,7 @@ public class GunManager : MonoBehaviour
         for(int i = 0; i < gunObjects.Count; i++){
 			gunInfos.Add(gunObjects[i].GetComponent<GunInfo>());
 		}
+		gunTargetPos = gunInfos[gunID].basePos;
     }
 
     // Update is called once per frame
@@ -38,7 +39,6 @@ public class GunManager : MonoBehaviour
 
 	public void shoot(){
 		if(bullets > 0 && actionTimer <= 0){
-			//Debug.Log("Bang!!!!");
 			GameObject hitObject = gameManager.getLookedAtObject(gunHolder, hitMask);
 			if(hitObject != null){
 				if(hitObject.GetComponent<ClientMovement>() != null){
