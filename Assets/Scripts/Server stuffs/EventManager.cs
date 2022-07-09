@@ -7,6 +7,7 @@ public class EventManager : MonoBehaviour
 	public GameObject playerPrefab;
 	public ServerComm serverComm;
 	public GameManager gameManager;
+	public List<AudioSource> sounds;
 
     public void rawEvents(string eventString){
 		eventString = eventString.Substring(1, eventString.Length-2); //get rid of brackets
@@ -29,6 +30,10 @@ public class EventManager : MonoBehaviour
 				case "join":
 					Debug.Log("join event");
 					join(eventData[1], eventData[2], eventData[3]);
+					break;
+				case "sound":
+					Debug.Log("sound event");
+					sound(eventData[1]);
 					break;
 			}
         }
@@ -64,5 +69,9 @@ public class EventManager : MonoBehaviour
 		movement.player = GameObject.Find(serverComm.ID.ToString()); //letting the other player's object know who the client here is
 		targetPlayer.name = ID;
 		movement.SetUsrname(usrname);
+	}
+
+	void sound(string soundID){
+		sounds[int.Parse(soundID)].Play();
 	}
 }
