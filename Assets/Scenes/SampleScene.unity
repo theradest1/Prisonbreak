@@ -2887,8 +2887,8 @@ MonoBehaviour:
   totalBullets: 30
   reloadTime: 1
   shootDelay: 0.07
-  shootSoundID: 0
-  reloadSoundID: 0
+  shootSoundID: 1
+  reloadSoundID: 2
   automatic: 1
 --- !u!1 &705507993
 GameObject:

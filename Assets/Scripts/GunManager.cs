@@ -18,9 +18,9 @@ public class GunManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		//get gun info ahead of time for performance
         for(int i = 0; i < gunObjects.Count; i++){
 			gunInfos.Add(gunObjects[i].GetComponent<GunInfo>());
-			Debug.Log(gunObjects[i]);
 		}
     }
 
@@ -46,7 +46,7 @@ public class GunManager : MonoBehaviour
 			bullets -= 1;
 			gameManager.updateGUI();
 			actionTimer += gunInfos[gunID].shootDelay;
-			StartCoroutine(serverComm.Event("sound " + gunInfos[gunID].shootSoundID.ToString() + " " + "(" + gunObjects[gunID].transform.position.x.ToString() + "," + gunObjects[gunID].transform.position.y.ToString() + "," + gunObjects[gunID].transform.position.x.ToString() + ")"));
+			StartCoroutine(serverComm.Event("sound " + gunInfos[gunID].shootSoundID.ToString() + " " + gunObjects[gunID].transform.position.x.ToString() + " " + gunObjects[gunID].transform.position.y.ToString() + " " + gunObjects[gunID].transform.position.x.ToString()));
 			return;
 		}
 		reload();
@@ -58,7 +58,7 @@ public class GunManager : MonoBehaviour
 			bullets = gunInfos[gunID].totalBullets;
 			gameManager.updateGUI();
 			actionTimer += gunInfos[gunID].reloadTime;
-			StartCoroutine(serverComm.Event("sound " + gunInfos[gunID].reloadSoundID.ToString() + " " + "(" + gunObjects[gunID].transform.position.x.ToString() + "," + gunObjects[gunID].transform.position.y.ToString() + "," + gunObjects[gunID].transform.position.x.ToString() + ")"));
+			StartCoroutine(serverComm.Event("sound " + gunInfos[gunID].reloadSoundID.ToString() + " " + gunObjects[gunID].transform.position.x.ToString() + " " + gunObjects[gunID].transform.position.y.ToString() + " " + gunObjects[gunID].transform.position.x.ToString()));
 		}
 	}
 

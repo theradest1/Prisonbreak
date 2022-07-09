@@ -17,7 +17,7 @@ public class EventManager : MonoBehaviour
     	{
 			//Debug.Log(indiEvent);
 			string pureEvent = indiEvent.Substring(1, indiEvent.Length-2); //get rid of quotations (from the server sending a list that was converted to a string full of strings)
-            //Debug.Log(pureEvent);
+            Debug.Log(pureEvent);
 			string[] eventData = pureEvent.Split(' ');
 			switch(eventData[0]){
 				case "damage":
@@ -34,7 +34,8 @@ public class EventManager : MonoBehaviour
 					break;
 				case "sound":
 					Debug.Log("sound event");
-					sound(eventData[1], eventData[2]);
+					Debug.Log(eventData[2] + ", " + eventData[3] + ", " + eventData[4]);
+					sound(eventData[1], new Vector3(float.Parse(eventData[2]), float.Parse(eventData[3]), float.Parse(eventData[4])));
 					break;
 			}
         }
@@ -72,12 +73,10 @@ public class EventManager : MonoBehaviour
 		movement.SetUsrname(usrname);
 	}
 
-	void sound(string soundID, string position){
-		Debug.Log(position);
-		Vector3 pos = serverComm.StringToVector3(position);
-		Debug.Log(pos);
-		AudioSource sound = Instantiate(audioSourcePrefab, pos, Quaternion.identity);
+	void sound(string soundID, Vector3 position){
+		AudioSource sound = Instantiate(audioSourcePrefab, position, Quaternion.identity);
 		sound.clip = sounds[int.Parse(soundID)];
 		sound.Play();
+		Destroy(sound.gameObject, sound.clip.length);
 	}
 }
