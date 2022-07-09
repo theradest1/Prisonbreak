@@ -562,6 +562,8 @@ MonoBehaviour:
   healthGUI: {fileID: 1976009550}
   bulletsGUI: {fileID: 77130521}
   gunManager: {fileID: 267940384}
+  camADSFOV: 40
+  camBaseFOV: 60
 --- !u!4 &267940381
 Transform:
   m_ObjectHideFlags: 0
@@ -652,6 +654,8 @@ MonoBehaviour:
     m_Bits: 247
   serverComm: {fileID: 311639550}
   gunTargetPos: {x: 0, y: 0, z: 0}
+  camTargetFOV: 60
+  camFOVChangeSpeed: 10
   ads: 0
 --- !u!1 &282364539
 GameObject:
@@ -2649,7 +2653,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &483462413
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2792,7 +2796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  kickback: 1
+  kickback: 8
   recoverySpeed: 15
   volume: 1
   totalBullets: 10
