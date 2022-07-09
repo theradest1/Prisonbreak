@@ -6,7 +6,7 @@ public class GunManager : MonoBehaviour
 {
 	public int bullets;
 	public List<GameObject> gunObjects;
-	List<GunInfo> gunInfos = new List<GunInfo>();
+	public List<GunInfo> gunInfos = new List<GunInfo>();
 	public GameObject gunHolder;
 	public GameObject cam;
 	public int gunID = 0;
@@ -14,6 +14,8 @@ public class GunManager : MonoBehaviour
 	float actionTimer;
 	public LayerMask hitMask;
 	public ServerComm serverComm;
+	public Vector3 gunTargetPos;
+	public bool ads;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,8 @@ public class GunManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {	
+		gunObjects[gunID].transform.localPosition = Vector3.MoveTowards(gunObjects[gunID].transform.localPosition, gunTargetPos, gunInfos[gunID].recoverySpeed * Time.deltaTime);
 		gunHolder.transform.rotation = Quaternion.RotateTowards(gunHolder.transform.rotation, cam.transform.rotation, gunInfos[gunID].recoverySpeed * Quaternion.Angle(gunHolder.transform.rotation, cam.transform.rotation) * Time.deltaTime);
 		if(actionTimer >0){
 			actionTimer -= Time.deltaTime;
@@ -46,7 +49,12 @@ public class GunManager : MonoBehaviour
 			bullets -= 1;
 			gameManager.updateGUI();
 			actionTimer += gunInfos[gunID].shootDelay;
-			gunHolder.transform.Rotate(-gunInfos[gunID].kickback, 0f, 0f, Space.Self);
+			if(ads){
+				gunHolder.transform.Rotate(-gunInfos[gunID].kickback/2, 0f, 0f, Space.Self);
+			}
+			else{
+				gunHolder.transform.Rotate(-gunInfos[gunID].kickback, 0f, 0f, Space.Self);
+			}
 			StartCoroutine(serverComm.Event("sound " + gunInfos[gunID].shootSoundID.ToString() + " " + gunObjects[gunID].transform.position.x.ToString() + " " + gunObjects[gunID].transform.position.y.ToString() + " " + gunObjects[gunID].transform.position.z.ToString()));
 			return;
 		}
@@ -70,6 +78,7 @@ public class GunManager : MonoBehaviour
 		}
 		gunObjects[newGunID].SetActive(true);
 		actionTimer = 0;
+		gunTargetPos = gunInfos[gunID].basePos;
 		reload();
 	}
 }

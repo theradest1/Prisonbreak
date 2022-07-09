@@ -14,4 +14,6 @@ public class GunInfo : MonoBehaviour
 	public int shootSoundID;
 	public int reloadSoundID;
 	public bool automatic;
+	public Vector3 adsPos;
+	public Vector3 basePos;
 }
