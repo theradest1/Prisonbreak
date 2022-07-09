@@ -3095,7 +3095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee324b1253514a4e85638a653d15f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSense: 1000
+  mouseSense: 500
   player: {fileID: 2051250512}
 --- !u!114 &963194230
 MonoBehaviour:

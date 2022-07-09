@@ -11,7 +11,6 @@ public class ServerComm : MonoBehaviour
 	public string team = "prisoner";
 	public float level;
 	public Transform playerTransform;
-	
 	public float updateDelay = .1f;
 	string serverAddress;
 	public bool localNetwork;
@@ -116,8 +115,9 @@ public class ServerComm : MonoBehaviour
 			Debug.Log("Left server succesfully");
 		}
 
-		Application.Quit();
 		UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
+		Application.Quit();
+		
 	}
 
 	public Vector3 StringToVector3(string str){
