@@ -9,12 +9,15 @@ public class GunManager : MonoBehaviour
 	public List<GunInfo> gunInfos = new List<GunInfo>();
 	public GameObject gunHolder;
 	public GameObject cam;
+	Camera camComponent;
 	public int gunID = 0;
 	public GameManager gameManager;
 	float actionTimer;
 	public LayerMask hitMask;
 	public ServerComm serverComm;
 	public Vector3 gunTargetPos;
+	public float camTargetFOV = 60f;
+	public float camFOVChangeSpeed;
 	public bool ads;
     // Start is called before the first frame update
     void Start()
@@ -24,6 +27,7 @@ public class GunManager : MonoBehaviour
 			gunInfos.Add(gunObjects[i].GetComponent<GunInfo>());
 		}
 		gunTargetPos = gunInfos[gunID].basePos;
+		camComponent = cam.GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -35,6 +39,9 @@ public class GunManager : MonoBehaviour
 			actionTimer -= Time.deltaTime;
 		}
 		Debug.DrawRay(gunHolder.transform.position, gunHolder.transform.forward * 99999f, Color.red);
+
+		camComponent.fieldOfView = Mathf.MoveTowards(camComponent.fieldOfView, camTargetFOV, camFOVChangeSpeed * Time.deltaTime * Mathf.Abs(camComponent.fieldOfView - camTargetFOV));
+
     }
 
 	public void shoot(){

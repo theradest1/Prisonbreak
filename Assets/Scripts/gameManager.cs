@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 	public TextMeshProUGUI healthGUI;
 	public TextMeshProUGUI bulletsGUI;
 	public GunManager gunManager;
+	public float camADSFOV;
+	public float camBaseFOV;
 
     // Update is called once per frame
     void Update()
@@ -28,10 +30,12 @@ public class GameManager : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.Mouse1)){
 			gunManager.gunTargetPos = gunManager.gunInfos[gunManager.gunID].adsPos;
 			gunManager.ads = true;
+			gunManager.camTargetFOV = camADSFOV;
 		}
 		if(Input.GetKeyUp(KeyCode.Mouse1)){
 			gunManager.gunTargetPos = gunManager.gunInfos[gunManager.gunID].basePos;
 			gunManager.ads = false;
+			gunManager.camTargetFOV = camBaseFOV;
 		}
 
 		if(Input.GetKeyDown("r")){
