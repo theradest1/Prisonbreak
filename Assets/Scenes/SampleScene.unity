@@ -625,6 +625,7 @@ MonoBehaviour:
   gunObjects:
   - {fileID: 660236740}
   - {fileID: 658112513}
+  - {fileID: 0}
   gunHolder: {fileID: 1408386566}
   cam: {fileID: 963194225}
   gunLerpSpeed: 150
@@ -3094,7 +3095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1024051618558617695, guid: d0ca414bf3cc5ea48a8121dbe115f855, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0ca414bf3cc5ea48a8121dbe115f855, type: 3}
