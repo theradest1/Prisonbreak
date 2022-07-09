@@ -642,6 +642,7 @@ MonoBehaviour:
   - {fileID: 660236740}
   - {fileID: 658112513}
   - {fileID: 1541233285}
+  gunInfos: []
   gunHolder: {fileID: 1408386566}
   cam: {fileID: 963194225}
   gunID: 0
@@ -650,6 +651,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 247
   serverComm: {fileID: 311639550}
+  gunTargetPos: {x: 0, y: 0, z: 0}
+  ads: 0
 --- !u!1 &282364539
 GameObject:
   m_ObjectHideFlags: 0
@@ -2646,7 +2649,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &483462413
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2798,6 +2801,8 @@ MonoBehaviour:
   shootSoundID: 4
   reloadSoundID: 1
   automatic: 0
+  adsPos: {x: 0, y: 0, z: 0}
+  basePos: {x: 0, y: 0, z: 0}
 --- !u!1001 &660236738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2891,6 +2896,8 @@ MonoBehaviour:
   shootSoundID: 2
   reloadSoundID: 12
   automatic: 1
+  adsPos: {x: 0, y: -0.17, z: 0.72}
+  basePos: {x: 0.46, y: -0.36, z: 0.41}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -3355,6 +3362,8 @@ MonoBehaviour:
   shootSoundID: 0
   reloadSoundID: 12
   automatic: 0
+  adsPos: {x: 0, y: 0, z: 0}
+  basePos: {x: 0, y: 0, z: 0}
 --- !u!1001 &1629384291
 PrefabInstance:
   m_ObjectHideFlags: 0

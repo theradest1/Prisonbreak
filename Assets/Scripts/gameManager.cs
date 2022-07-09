@@ -25,6 +25,14 @@ public class GameManager : MonoBehaviour
 		if(Input.GetKey(KeyCode.Mouse0)){
 			gunManager.shoot();
 		}
+		if(Input.GetKeyDown(KeyCode.Mouse1)){
+			gunManager.gunTargetPos = gunManager.gunInfos[gunManager.gunID].adsPos;
+			gunManager.ads = true;
+		}
+		if(Input.GetKeyUp(KeyCode.Mouse1)){
+			gunManager.gunTargetPos = gunManager.gunInfos[gunManager.gunID].basePos;
+			gunManager.ads = false;
+		}
 
 		if(Input.GetKeyDown("r")){
 			gunManager.reload();
