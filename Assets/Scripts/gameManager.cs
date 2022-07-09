@@ -5,7 +5,6 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-
 	public ServerComm serverComm;
 	public float health;
 	public TextMeshProUGUI healthGUI;

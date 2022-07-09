@@ -45,8 +45,8 @@ public class GunManager : MonoBehaviour
 			}
 			bullets -= 1;
 			gameManager.updateGUI();
-			gunInfos[gunID].shoot.Play();
 			actionTimer += gunInfos[gunID].shootDelay;
+			StartCoroutine(serverComm.Event("sound " + gunInfos[gunID].shootSoundID.ToString() + " " + "(" + gunObjects[gunID].transform.position.x.ToString() + "," + gunObjects[gunID].transform.position.y.ToString() + "," + gunObjects[gunID].transform.position.x.ToString() + ")"));
 			return;
 		}
 		reload();
@@ -57,8 +57,8 @@ public class GunManager : MonoBehaviour
 			//Debug.Log("Reload");
 			bullets = gunInfos[gunID].totalBullets;
 			gameManager.updateGUI();
-			gunInfos[gunID].reload.Play();
 			actionTimer += gunInfos[gunID].reloadTime;
+			StartCoroutine(serverComm.Event("sound " + gunInfos[gunID].reloadSoundID.ToString() + " " + "(" + gunObjects[gunID].transform.position.x.ToString() + "," + gunObjects[gunID].transform.position.y.ToString() + "," + gunObjects[gunID].transform.position.x.ToString() + ")"));
 		}
 	}
 

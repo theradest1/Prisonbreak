@@ -7,7 +7,8 @@ public class EventManager : MonoBehaviour
 	public GameObject playerPrefab;
 	public ServerComm serverComm;
 	public GameManager gameManager;
-	public List<AudioSource> sounds;
+	public List<AudioClip> sounds;
+	public AudioSource audioSourcePrefab;
 
     public void rawEvents(string eventString){
 		eventString = eventString.Substring(1, eventString.Length-2); //get rid of brackets
@@ -33,7 +34,7 @@ public class EventManager : MonoBehaviour
 					break;
 				case "sound":
 					Debug.Log("sound event");
-					sound(eventData[1]);
+					sound(eventData[1], eventData[2]);
 					break;
 			}
         }
@@ -71,7 +72,12 @@ public class EventManager : MonoBehaviour
 		movement.SetUsrname(usrname);
 	}
 
-	void sound(string soundID){
-		sounds[int.Parse(soundID)].Play();
+	void sound(string soundID, string position){
+		Debug.Log(position);
+		Vector3 pos = serverComm.StringToVector3(position);
+		Debug.Log(pos);
+		AudioSource sound = Instantiate(audioSourcePrefab, pos, Quaternion.identity);
+		sound.clip = sounds[int.Parse(soundID)];
+		sound.Play();
 	}
 }

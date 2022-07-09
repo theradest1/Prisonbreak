@@ -10,7 +10,7 @@ public class GunInfo : MonoBehaviour
 	public int totalBullets;
 	public float reloadTime;
 	public float shootDelay;
-	public AudioSource shoot;
-	public AudioSource reload;
+	public int shootSoundID;
+	public int reloadSoundID;
 	public bool automatic;
 }
