@@ -264,7 +264,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh20674
+  m_Name: pb_Mesh34350
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -657,6 +657,7 @@ MonoBehaviour:
   camTargetFOV: 60
   camFOVChangeSpeed: 10
   ads: 0
+  bulletHitPrefab: {fileID: 1110403933906599362, guid: 4d14d4363bc5c1444802ee958b0104af, type: 3}
 --- !u!1 &282364539
 GameObject:
   m_ObjectHideFlags: 0
@@ -3356,13 +3357,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2570cbc3acc2d34a9bf2dbc375999c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 60
-  kickback: 100
+  damage: 345636
+  kickback: 0
   recoverySpeed: 2
   volume: 0
-  totalBullets: 6
-  reloadTime: 3
-  shootDelay: 1.5
+  totalBullets: 200
+  reloadTime: 0.1
+  shootDelay: 0.01
   shootSoundID: 0
   reloadSoundID: 12
   automatic: 0

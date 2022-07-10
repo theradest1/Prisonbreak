@@ -19,6 +19,7 @@ public class GunManager : MonoBehaviour
 	public float camTargetFOV = 60f;
 	public float camFOVChangeSpeed;
 	public bool ads;
+	public GameObject bulletHitPrefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,13 +47,17 @@ public class GunManager : MonoBehaviour
 
 	public void shoot(){
 		if(bullets > 0 && actionTimer <= 0){
-			GameObject hitObject = gameManager.getLookedAtObject(gunHolder, hitMask);
+			Physics.Raycast(gunHolder.transform.position, gunHolder.transform.forward, out var hit, Mathf.Infinity, hitMask);
+			GameObject hitObject = hit.collider.gameObject;
+
 			if(hitObject != null){
 				if(hitObject.GetComponent<ClientMovement>() != null){
 					Debug.Log("Hit player with ID " + hitObject.name + " for " + gunInfos[gunID].damage.ToString() + " damage");
 					StartCoroutine(serverComm.Event("damage " + hitObject.name + " " + gunInfos[gunID].damage.ToString()));
 				}
 			}
+
+			Instantiate(bulletHitPrefab, hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal)); //dust
 			bullets -= 1;
 			gameManager.updateGUI();
 			actionTimer += gunInfos[gunID].shootDelay;

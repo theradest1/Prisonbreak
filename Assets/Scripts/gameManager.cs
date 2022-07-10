@@ -56,12 +56,4 @@ public class GameManager : MonoBehaviour
 		healthGUI.text = health.ToString();
 		bulletsGUI.text = gunManager.bullets.ToString();
 	}
-
-	public GameObject getLookedAtObject(GameObject cam, LayerMask mask){
-		if(Physics.Raycast(cam.transform.position, cam.transform.forward, out var hit, Mathf.Infinity, mask)){
-			GameObject obj = hit.collider.gameObject;
-			return obj;
-		}
-		return null;
-	}
 }
