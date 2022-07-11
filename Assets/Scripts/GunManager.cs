@@ -36,13 +36,11 @@ public class GunManager : MonoBehaviour
     {	
 		gunObjects[gunID].transform.localPosition = Vector3.MoveTowards(gunObjects[gunID].transform.localPosition, gunTargetPos, gunInfos[gunID].recoverySpeed * Time.deltaTime);
 		gunHolder.transform.rotation = Quaternion.RotateTowards(gunHolder.transform.rotation, cam.transform.rotation, gunInfos[gunID].recoverySpeed * Quaternion.Angle(gunHolder.transform.rotation, cam.transform.rotation) * Time.deltaTime);
-		if(actionTimer >0){
+		camComponent.fieldOfView = Mathf.MoveTowards(camComponent.fieldOfView, camTargetFOV, camFOVChangeSpeed * Time.deltaTime * Mathf.Abs(camComponent.fieldOfView - camTargetFOV));
+		
+		if(actionTimer > 0){
 			actionTimer -= Time.deltaTime;
 		}
-		Debug.DrawRay(gunHolder.transform.position, gunHolder.transform.forward * 99999f, Color.red);
-
-		camComponent.fieldOfView = Mathf.MoveTowards(camComponent.fieldOfView, camTargetFOV, camFOVChangeSpeed * Time.deltaTime * Mathf.Abs(camComponent.fieldOfView - camTargetFOV));
-
     }
 
 	public void shoot(){
