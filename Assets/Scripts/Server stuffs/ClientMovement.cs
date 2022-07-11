@@ -26,7 +26,7 @@ public class ClientMovement : MonoBehaviour
     {
 		canvas.transform.LookAt(player.transform.position);
 		if(smooth){
-			transform.position = Vector3.Lerp(transform.position, targetPos, speed * Time.deltaTime);
+			transform.position = Vector3.Lerp(transform.position, targetPos, speed);
 		}
         else{
 			transform.position = targetPos;
