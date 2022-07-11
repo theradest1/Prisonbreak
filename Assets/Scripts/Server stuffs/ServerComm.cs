@@ -25,6 +25,7 @@ public class ServerComm : MonoBehaviour
 		else{
 			serverAddress = "http://75.100.205.73:3000/";
 		}
+		usrname = GUIManager.usrname;
 		StartCoroutine(Join());
     }
 
@@ -39,6 +40,7 @@ public class ServerComm : MonoBehaviour
 
 		if(www.result != UnityWebRequest.Result.Success){
 			Debug.LogError("Somethig Went wrong: " + www.error);
+			Debug.Log("Web address of server trying to join is " + address);
 			Debug.LogError("Could not join, try again and check server status");
 		}
 		else{

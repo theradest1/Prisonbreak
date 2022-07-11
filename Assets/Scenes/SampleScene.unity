@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 58fa2d950b2211e4cbfe43d0dd6491eb, type: 2}
   m_LightingSettings: {fileID: 1059092903}
 --- !u!196 &4
 NavMeshSettings:
@@ -3357,13 +3357,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2570cbc3acc2d34a9bf2dbc375999c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 345636
+  damage: 60
   kickback: 0
   recoverySpeed: 2
   volume: 0
-  totalBullets: 200
-  reloadTime: 0.1
-  shootDelay: 0.01
+  totalBullets: 6
+  reloadTime: 5
+  shootDelay: 4
   shootSoundID: 0
   reloadSoundID: 12
   automatic: 0

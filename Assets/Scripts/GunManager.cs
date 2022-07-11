@@ -47,10 +47,8 @@ public class GunManager : MonoBehaviour
 
 	public void shoot(){
 		if(bullets > 0 && actionTimer <= 0){
-			Physics.Raycast(gunHolder.transform.position, gunHolder.transform.forward, out var hit, Mathf.Infinity, hitMask);
-			GameObject hitObject = hit.collider.gameObject;
-
-			if(hitObject != null){
+			if(Physics.Raycast(gunHolder.transform.position, gunHolder.transform.forward, out var hit, Mathf.Infinity, hitMask)){
+				GameObject hitObject = hit.collider.gameObject;
 				if(hitObject.GetComponent<ClientMovement>() != null){
 					Debug.Log("Hit player with ID " + hitObject.name + " for " + gunInfos[gunID].damage.ToString() + " damage");
 					StartCoroutine(serverComm.Event("damage " + hitObject.name + " " + gunInfos[gunID].damage.ToString()));
