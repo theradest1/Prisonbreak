@@ -28,16 +28,11 @@ public class GUIManager : MonoBehaviour
 
 	public void JoinGame(){
 		if(wantedUsername.text.Length >= 3){
-			if(wantedUsername.text.Length <= 15){
-				usrname = wantedUsername.text;
-				Debug.Log("Trying to connect to public server ip.");
-				StartCoroutine(tryToConnect("http://75.100.205.73:3000/"));
-				Debug.Log("Trying to connect to local server ip.");
-				StartCoroutine(tryToConnect("http://192.168.0.24:3000/"));
-			}
-			else{
-				usrnameError.text = "Username is too long";
-			}
+			usrname = wantedUsername.text;
+			Debug.Log("Trying to connect to public server ip.");
+			StartCoroutine(tryToConnect("http://75.100.205.73:3000/"));
+			Debug.Log("Trying to connect to local server ip.");
+			StartCoroutine(tryToConnect("http://192.168.0.24:3000/"));
 		}
 		else{
 			usrnameError.text = "Username is not long enough";
@@ -50,6 +45,9 @@ public class GUIManager : MonoBehaviour
 			if(!allowedChars.Contains(wantedUsername.text[strLen - 1])){
 				wantedUsername.text = wantedUsername.text.Substring(0, strLen - 1);
 			}
+		}
+		if(wantedUsername.text.Length > 15){
+			wantedUsername.text = wantedUsername.text.Substring(0, 14);
 		}
 	}
 
