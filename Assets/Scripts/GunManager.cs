@@ -51,9 +51,11 @@ public class GunManager : MonoBehaviour
 					Debug.Log("Hit player with ID " + hitObject.name + " for " + gunInfos[gunID].damage.ToString() + " damage");
 					StartCoroutine(serverComm.Event("damage " + hitObject.name + " " + gunInfos[gunID].damage.ToString()));
 				}
+				else{
+					Instantiate(bulletHitPrefab, hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal)); //dust
+				}
 			}
 
-			Instantiate(bulletHitPrefab, hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal)); //dust
 			bullets -= 1;
 			gameManager.updateGUI();
 			actionTimer += gunInfos[gunID].shootDelay;

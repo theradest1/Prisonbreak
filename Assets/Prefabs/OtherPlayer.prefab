@@ -504,7 +504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPos: {x: 0, y: 0, z: 0}
-  speed: 0.02
+  speed: 30
   smooth: 1
   canvas: {fileID: 385817159741697228}
   nameText: {fileID: 8193426602924294486}
