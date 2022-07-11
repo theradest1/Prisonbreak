@@ -21,6 +21,7 @@ app.get("/join/:usrname/:team", (req, res) =>{
 		"name": req.params["usrname"],
 		"team": req.params["team"],
 		"level": 3.7, //Get this and inventory from a server-stored JSON file
+		"health": 100,
 		"inventory": [
 			{ item: "pistol" },
 			{ item: "keycard" }
@@ -32,12 +33,12 @@ app.get("/join/:usrname/:team", (req, res) =>{
 	res.json({"ID": ID, "level": 3.7});
 	for(var subNode in changingData){
 		if(ID != subNode){
-			changingData[subNode].events.push("join " + ID + " " + req.params["usrname"] + " " + req.params["team"]);
+			changingData[subNode].events.push("join " + ID + " " + req.params["usrname"] + " " + req.params["team"] + " " + playerData[ID].health);
 		}
 		else{
 			for(var ID_ in changingData){
 				if(ID != ID_){
-					changingData[ID].events.push("join " + ID_ + " " + playerData[ID_].name + " " + playerData[ID_].team);
+					changingData[ID].events.push("join " + ID_ + " " + playerData[ID_].name + " " + playerData[ID_].team + " " + playerData[ID_].health);
 				}
 			}
 		}
@@ -79,7 +80,12 @@ app.get("/event/:info", (req, res) => {
 	for(var subNode in changingData){
 		changingData[subNode].events.push(event);
 	}
-	console.log(changingData);
+	//test if damage event
+	var eventData = event.split(' ');
+	if(eventData[0] == "damage"){
+		playerData[eventData[1]].health -= parseFloat(eventData[2]);
+	}
+	//console.log(changingData);
 })
 
 app.listen(port, host, () => {

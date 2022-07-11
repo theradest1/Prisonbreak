@@ -30,7 +30,7 @@ public class EventManager : MonoBehaviour
 					break;
 				case "join":
 					Debug.Log("join event");
-					join(eventData[1], eventData[2], eventData[3]);
+					join(eventData[1], eventData[2], eventData[3], eventData[4]);
 					break;
 				case "sound":
 					Debug.Log("sound event");
@@ -63,13 +63,15 @@ public class EventManager : MonoBehaviour
 		Destroy(GameObject.Find(ID));
 	}
 
-	void join(string ID, string usrname, string team){
-		Debug.Log("Player with ID " + ID + " has joined the game with usraname " + usrname + " and are a " + team); //ID, usraname, team
+	void join(string ID, string usrname, string team, string health){
+		Debug.Log("Player with ID " + ID + " has joined the game with usraname " + usrname + " and are a " + team + " with health of " + health); //ID, usraname, team, health
 		GameObject targetPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
 		ClientMovement movement = targetPlayer.GetComponent<ClientMovement>();
 		movement.player = GameObject.Find(serverComm.ID.ToString()); //letting the other player's object know who the client here is
 		targetPlayer.name = ID;
+		movement.health = float.Parse(health);
+		movement.updateHealth();
 		movement.SetUsrname(usrname);
 	}
 
