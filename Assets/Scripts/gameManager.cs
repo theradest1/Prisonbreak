@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
 {
 	public ServerComm serverComm;
 	public float health;
-	public TextMeshProUGUI healthGUI;
+	//public TextMeshProUGUI healthGUI;
+	public Slider healthSlider;
 	public TextMeshProUGUI bulletsGUI;
 	public GunManager gunManager;
 	public float camADSFOV;
@@ -53,7 +55,8 @@ public class GameManager : MonoBehaviour
     }
 
 	public void updateGUI(){
-		healthGUI.text = health.ToString();
+		//healthGUI.text = health.ToString();
+		healthSlider.value = health;
 		bulletsGUI.text = gunManager.bullets.ToString();
 	}
 }
