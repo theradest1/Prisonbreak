@@ -13,18 +13,12 @@ public class ServerComm : MonoBehaviour
 	public Transform playerTransform;
 	public float updateDelay = .1f;
 	string serverAddress;
-	public bool localNetwork;
 	public EventManager eventManager;
 
     // Start is called before the first frame update
     void Start()
     {
-		if(localNetwork){
-			serverAddress = "http://192.168.0.24:3000/";
-		}
-		else{
-			serverAddress = "http://75.100.205.73:3000/";
-		}
+		serverAddress = GUIManager.workingAddress;
 		usrname = GUIManager.usrname;
 		StartCoroutine(Join());
     }

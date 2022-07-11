@@ -9,7 +9,11 @@ var playerData = {};
 var changingData = {};
 
 app.get("/", (req, res) =>{
-	res.send("Server is up")
+	res.send("Server is up");
+});
+
+app.get("/players", (req, res) =>{
+	res.send(players.toString());
 });
 
 app.get("/join/:usrname/:team", (req, res) =>{
