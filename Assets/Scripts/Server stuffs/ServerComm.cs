@@ -13,18 +13,13 @@ public class ServerComm : MonoBehaviour
 	public Transform playerTransform;
 	public float updateDelay = .1f;
 	string serverAddress;
-	public bool localNetwork;
 	public EventManager eventManager;
 
     // Start is called before the first frame update
     void Start()
     {
-		if(localNetwork){
-			serverAddress = "http://192.168.0.24:3000/";
-		}
-		else{
-			serverAddress = "http://75.100.205.73:3000/";
-		}
+		serverAddress = GUIManager.workingAddress;
+		usrname = GUIManager.usrname;
 		StartCoroutine(Join());
     }
 
@@ -39,6 +34,7 @@ public class ServerComm : MonoBehaviour
 
 		if(www.result != UnityWebRequest.Result.Success){
 			Debug.LogError("Somethig Went wrong: " + www.error);
+			Debug.Log("Web address of server trying to join is " + address);
 			Debug.LogError("Could not join, try again and check server status");
 		}
 		else{
