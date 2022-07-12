@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.gameObject.transform.position = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
+        //this.gameObject.transform.position = new Vector3(Random.Range(-10, 10), 200, Random.Range(-10, 10));
     }
 
     // Update is called once per frame

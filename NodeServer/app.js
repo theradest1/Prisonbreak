@@ -57,7 +57,7 @@ app.get("/join/:usrname/:team", (req, res) =>{
 	};
 	var ID = IDcounter;
 	playerData[ID] = data;
-	changingData[ID] = {"pos": "(0, 0, 0)", "rot": "(0, 0, 0)", "events": [], "ID": ID};
+	changingData[ID] = {"pos": "(0, 25, 0)", "rot": "(0, 0, 0)", "events": [], "ID": ID};
 	res.json({"ID": ID, "level": 3.7});
 	for(var subNode in changingData){
 		if(ID != subNode){

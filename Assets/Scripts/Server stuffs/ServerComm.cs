@@ -43,7 +43,7 @@ public class ServerComm : MonoBehaviour
 
 			JSONNode processedData = ProcessJSON(data);
 			ID = processedData["ID"];
-			playerTransform.position = new Vector3(0f, 0f, 0f); //change to get from node
+			//playerTransform.position = new Vector3(0f, 0f, 0f); //change to get from node
 			level = processedData["level"];
 
 			GameObject.Find("Player").name = ID;
