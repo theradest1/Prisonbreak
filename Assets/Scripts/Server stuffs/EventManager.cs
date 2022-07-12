@@ -34,8 +34,12 @@ public class EventManager : MonoBehaviour
 					break;
 				case "sound":
 					Debug.Log("sound event");
-					Debug.Log(eventData[2] + ", " + eventData[3] + ", " + eventData[4]);
+					//Debug.Log(eventData[2] + ", " + eventData[3] + ", " + eventData[4]);
 					sound(eventData[1], new Vector3(float.Parse(eventData[2]), float.Parse(eventData[3]), float.Parse(eventData[4])));
+					break;
+				case "changeheld":
+					Debug.Log("Change held item event");
+					changeHeldItem(eventData[1], eventData[2]);
 					break;
 			}
         }
@@ -80,5 +84,11 @@ public class EventManager : MonoBehaviour
 		sound.clip = sounds[int.Parse(soundID)];
 		sound.Play();
 		Destroy(sound.gameObject, sound.clip.length);
+	}
+
+	void changeHeldItem(string ID, string itemID){
+		if(ID != serverComm.ID){
+			GameObject.Find(ID).GetComponent<ClientMovement>().changeHeldItem(int.Parse(itemID));
+		}
 	}
 }
