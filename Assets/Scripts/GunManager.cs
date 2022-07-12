@@ -90,5 +90,7 @@ public class GunManager : MonoBehaviour
 		actionTimer = 0;
 		gunTargetPos = gunInfos[gunID].basePos;
 		reload();
+
+		StartCoroutine(serverComm.Event("changeheld " + serverComm.ID.ToString() + " " + newGunID.ToString()));
 	}
 }
