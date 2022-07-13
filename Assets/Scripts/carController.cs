@@ -11,7 +11,8 @@ public class carController : MonoBehaviour
 
 	public float acceleration;
 	float currentAcceleration;
-	public float breakingForce;
+	public float brakingForce;
+	float currentBrakingForce;
 	public float maxTurnAngle;
 	public float currentTurnAngle;
 
@@ -19,11 +20,15 @@ public class carController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if(Input.GetKey(KeyCode.Space)){
+			currentBrakingForce = brakingForce;
+		}
+		else{
+			currentBrakingForce = 0;
+		}
+		wheelBL.brakeTorque  = currentBrakingForce;
+		wheelBR.brakeTorque  = currentBrakingForce;
 
-		//if(Input.GetKey(KeyCode.DownArrow)){
-		//	wheelFL.breakTorque = breakingForce;
-		//	wheelFR.breakTorque = breakingForce;
-		//}
 		currentAcceleration = acceleration * Input.GetAxis("Vertical");
 		Debug.Log(currentAcceleration);
 		wheelBR.motorTorque = currentAcceleration;
@@ -31,7 +36,7 @@ public class carController : MonoBehaviour
 
 		currentTurnAngle = maxTurnAngle * Input.GetAxis("Horizontal");
 		wheelFL.steerAngle = currentTurnAngle;
-		wheelFR.steerAngle = -currentTurnAngle;
+		wheelFR.steerAngle = currentTurnAngle;
 
 	}
 }
