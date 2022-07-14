@@ -25,6 +25,9 @@ public class CarController : MonoBehaviour
 			if(Input.GetKey(KeyCode.Space)){
 				currentBrakingForce = brakingForce;
 			}
+			else if(Input.GetKey(KeyCode.DownArrow)){
+				currentBrakingForce = brakingForce/3f;
+			}
 			else{
 				currentBrakingForce = 0;
 			}
