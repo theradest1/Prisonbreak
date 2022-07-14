@@ -31,23 +31,22 @@ public class CarController : MonoBehaviour
 			else{
 				currentBrakingForce = 0;
 			}
-			wheelBL.brakeTorque  = currentBrakingForce;
-			wheelBR.brakeTorque  = currentBrakingForce;
-
 			currentAcceleration = acceleration * Input.GetAxis("Vertical");
-			Debug.Log(currentAcceleration);
-			wheelBR.motorTorque = currentAcceleration;
-			wheelBL.motorTorque = currentAcceleration;
-
 			currentTurnAngle = maxTurnAngle * Input.GetAxis("Horizontal");
-			wheelFL.steerAngle = currentTurnAngle;
-			wheelFR.steerAngle = currentTurnAngle;
 		}
 		else{
 			currentBrakingForce = brakingForce;
-			wheelBR.motorTorque = 0f;
-			wheelBL.motorTorque = 0f;
+			currentAcceleration = 0f;
+			currentTurnAngle = 0;
 		}
+		wheelBR.motorTorque = currentAcceleration;
+		wheelBL.motorTorque = currentAcceleration;
+
+		wheelFL.steerAngle = currentTurnAngle;
+		wheelFR.steerAngle = currentTurnAngle;
+
+		wheelBL.brakeTorque  = currentBrakingForce;
+		wheelBR.brakeTorque  = currentBrakingForce;
 
 	}
 

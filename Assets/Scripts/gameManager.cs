@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 	public float camADSFOV;
 	public float camBaseFOV;
 	public GameObject player;
+	Vector3 pastLoc;
 
     // Update is called once per frame
     void Update()
@@ -73,11 +74,14 @@ public class GameManager : MonoBehaviour
 		car.GetComponent<CarController>().playerControlling = true;
 		player.GetComponent<PlayerMovement>().ableToMove = false;
 		player.transform.SetParent(car.transform);
+		pastLoc = player.transform.localPosition;
+		player.transform.position = car.transform.position + Vector3.up * 3f;
 	}
 
 	public void leaveCar(GameObject car){
 		car.GetComponent<CarController>().playerControlling = false;
 		player.GetComponent<PlayerMovement>().ableToMove = true;
+		player.transform.localPosition = pastLoc;
 		player.transform.SetParent(null);
 	}
 }
