@@ -13,9 +13,6 @@ public class PlayerMovement : MonoBehaviour
 	public float jumpPower = 10f;
 	bool isGrounded;
 	public LayerMask groundMask;
-	public bool ableToMove = true;
-	public GameObject playerBody;
-	public GameObject gunHolder;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 		float z = Input.GetAxis("Vertical");
 
 		Vector3 move = transform.right * x + transform.forward * z;
+		controller.Move(move * speed * Time.deltaTime);
 
 		velocity.y += gravity * Time.deltaTime;
 
@@ -42,18 +40,7 @@ public class PlayerMovement : MonoBehaviour
 		if (Input.GetKeyDown("space") && isGrounded){
 			velocity.y += jumpPower;
 		}
-		if(ableToMove){
-			controller.Move(move * speed * Time.deltaTime);
-			controller.Move(velocity * Time.deltaTime);
-			controller.enabled = true;
-			playerBody.SetActive(true);
-			gunHolder.SetActive(true);
-		}
-		else{
-			controller.enabled = false;
-			playerBody.SetActive(false);
-			gunHolder.SetActive(false);
-			velocity = new Vector3(0, 0, 0);
-		}
+
+		controller.Move(velocity * Time.deltaTime);
 	}
 }
