@@ -125,7 +125,7 @@ public class ServerComm : MonoBehaviour
 	public IEnumerator Event(string info){
 		string address = serverAddress + "event/" + info;
 		UnityWebRequest www = UnityWebRequest.Get(address);
-		Debug.Log("Made server request: " + address);
+		//Debug.Log("Made server request: " + address);
 		yield return www.SendWebRequest();
 	}
 }
