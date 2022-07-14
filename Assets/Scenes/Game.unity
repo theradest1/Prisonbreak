@@ -682,6 +682,7 @@ MonoBehaviour:
   bulletsGUI: {fileID: 77130521}
   gunManager: {fileID: 267940384}
   carManager: {fileID: 267940385}
+  interactByCollision: {fileID: 2051250514}
   camADSFOV: 40
   camBaseFOV: 60
   player: {fileID: 2051250510}
@@ -5666,6 +5667,7 @@ GameObject:
   - component: {fileID: 2051250512}
   - component: {fileID: 2051250511}
   - component: {fileID: 2051250513}
+  - component: {fileID: 2051250514}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -5694,6 +5696,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 385
+  ableToMove: 1
 --- !u!4 &2051250512
 Transform:
   m_ObjectHideFlags: 0
@@ -5732,6 +5735,19 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2051250514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051250510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00038ae8cebba0e438a11cc2d1be4897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 267940380}
 --- !u!1001 &2063619428
 PrefabInstance:
   m_ObjectHideFlags: 0

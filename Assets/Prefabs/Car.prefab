@@ -628,8 +628,8 @@ GameObject:
   - component: {fileID: 8065768069960999108}
   - component: {fileID: 3102678158327684829}
   - component: {fileID: 3102678158327684826}
-  - component: {fileID: 5325438259424601194}
   - component: {fileID: 4764787368368527076}
+  - component: {fileID: -383662215372419512}
   m_Layer: 8
   m_Name: Car
   m_TagString: Untagged
@@ -695,22 +695,6 @@ MonoBehaviour:
   headlightsOn: 0
   headlightL: {fileID: 7803982279422868226}
   headlightR: {fileID: 7803982280376386755}
---- !u!114 &5325438259424601194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7252077429819636350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00038ae8cebba0e438a11cc2d1be4897, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unityEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  action: Get In Car
 --- !u!65 &4764787368368527076
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -724,6 +708,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.55, y: 1.81, z: 4.12}
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &-383662215372419512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7252077429819636350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff30a381a5609d4db2f73e769cc91b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: Get In Car
 --- !u!1 &7803982279409649861
 GameObject:
   m_ObjectHideFlags: 0

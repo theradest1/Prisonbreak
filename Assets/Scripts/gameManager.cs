@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 	public TextMeshProUGUI bulletsGUI;
 	public GunManager gunManager;
 	public CarManager carManager;
+	public InteractByCollision interactByCollision;
 	public float camADSFOV;
 	public float camBaseFOV;
 	public GameObject player;
@@ -57,11 +58,20 @@ public class GameManager : MonoBehaviour
 		if(Input.GetKeyDown("q")){
 			carManager.SpawnCar(player.transform.position + Vector3.up * 20f);
 		}
+		if(Input.GetKeyDown("e")){
+			interactByCollision.triggerEvent();
+		}
     }
 
 	public void updateGUI(){
 		//healthGUI.text = health.ToString();
 		healthSlider.value = health;
 		bulletsGUI.text = gunManager.bullets.ToString();
+	}
+
+	public void getInCar(GameObject car){
+		car.GetComponent<CarController>().playerControlling = true;
+		player.GetComponent<PlayerMovement>().ableToMove = false;
+		player.transform.SetParent(car.transform);
 	}
 }
