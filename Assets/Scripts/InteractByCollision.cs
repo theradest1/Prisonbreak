@@ -11,7 +11,7 @@ public class InteractByCollision : MonoBehaviour
 	{
 		if(collider.gameObject.GetComponent<PlayerMovement>() != null){
 			Debug.Log("triggered interaction " + action);
-			//unityEvent.Invoke();
+			unityEvent.Invoke();
 		}
 	}
 }
