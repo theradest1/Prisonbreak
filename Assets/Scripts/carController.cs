@@ -16,6 +16,9 @@ public class CarController : MonoBehaviour
 	public float maxTurnAngle;
 	public float currentTurnAngle;
 	public bool playerControlling = false;
+	public bool headlightsOn = false;
+	public GameObject headlightL;
+	public GameObject headlightR;
 
 
     // Update is called once per frame
@@ -46,5 +49,11 @@ public class CarController : MonoBehaviour
 			wheelBL.motorTorque = 0f;
 		}
 
+	}
+
+	public void SwitchHeadlights(){
+		headlightsOn = !headlightsOn;
+		headlightL.SetActive(headlightsOn);
+		headlightR.SetActive(headlightsOn);
 	}
 }

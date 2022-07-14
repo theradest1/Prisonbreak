@@ -12,8 +12,10 @@ public class GameManager : MonoBehaviour
 	public Slider healthSlider;
 	public TextMeshProUGUI bulletsGUI;
 	public GunManager gunManager;
+	public CarManager carManager;
 	public float camADSFOV;
 	public float camBaseFOV;
+	public GameObject player;
 
     // Update is called once per frame
     void Update()
@@ -43,7 +45,7 @@ public class GameManager : MonoBehaviour
 		if(Input.GetKeyDown("r")){
 			gunManager.reload();
 		}
-		if(Input.GetKeyDown("1")){
+		if(Input.GetKeyDown("1")){ //I dont really care how disgusting this is
 			gunManager.changeGun(0);
 		}
 		if(Input.GetKeyDown("2")){
@@ -52,6 +54,9 @@ public class GameManager : MonoBehaviour
 		if(Input.GetKeyDown("3")){
 			gunManager.changeGun(2);
 		}		
+		if(Input.GetKeyDown("q")){
+			carManager.SpawnCar(player.transform.position + Vector3.up * 20f);
+		}
     }
 
 	public void updateGUI(){

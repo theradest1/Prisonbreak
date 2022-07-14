@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class InteractByCollision : MonoBehaviour
 {
-	public CarController carController;
-
-	private void OnTriggerEnter(Collider other)
+	public LayerMask layersAbleToTrigger;
+	private void OnTriggerEnter(Collider collider)
 	{
-		if(other.gameObject.GetComponent<PlayerMovement>() != null){
-			Debug.Log("player in radius");
+		if(collider.gameObject.GetComponent<PlayerMovement>() != null){
+			Debug.Log("hola");
 		}
+		//if(other.gameObject.GetComponent<Player>() != null){
+		//	Debug.Log("player in radius");
+		//}
 	}
 }
