@@ -59,22 +59,4 @@ public class GameManager : MonoBehaviour
 		healthSlider.value = health;
 		bulletsGUI.text = gunManager.bullets.ToString();
 	}
-<<<<<<< Updated upstream
-=======
-
-	public void getInCar(GameObject car){
-		car.GetComponent<CarController>().playerControlling = true;
-		player.GetComponent<PlayerMovement>().ableToMove = false;
-		player.transform.SetParent(car.transform);
-		pastLoc = player.transform.localPosition;
-		player.GetComponent<PlayerMovement>().targetPos = new Vector3(0f, 3f, -4f);
-	}
-
-	public void leaveCar(GameObject car){
-		car.GetComponent<CarController>().playerControlling = false;
-		player.GetComponent<PlayerMovement>().ableToMove = true;
-		player.transform.localPosition = pastLoc;
-		player.transform.SetParent(null);
-	}
->>>>>>> Stashed changes
 }

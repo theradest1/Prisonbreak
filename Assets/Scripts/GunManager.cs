@@ -12,7 +12,7 @@ public class GunManager : MonoBehaviour
 	Camera camComponent;
 	public int gunID = 0;
 	public GameManager gameManager;
-	public float actionTimer;
+	float actionTimer;
 	public LayerMask hitMask;
 	public ServerComm serverComm;
 	public Vector3 gunTargetPos;
@@ -72,7 +72,7 @@ public class GunManager : MonoBehaviour
 	}
 
 	public void reload(){
-		if(actionTimer <= 0 && bullets < gunInfos[gunID].totalBullets){
+		if(actionTimer <= 0){
 			//Debug.Log("Reload");
 			bullets = gunInfos[gunID].totalBullets;
 			gameManager.updateGUI();
