@@ -677,14 +677,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serverComm: {fileID: 311639550}
-  health: 100
+  health: 0
   healthSlider: {fileID: 1649617474}
   bulletsGUI: {fileID: 77130521}
   gunManager: {fileID: 267940384}
   carManager: {fileID: 267940385}
   interactByCollision: {fileID: 2051250514}
-  camADSFOV: 40
-  camBaseFOV: 60
+  camADSFOV: 60
+  camBaseFOV: 90
   player: {fileID: 2051250510}
 --- !u!4 &267940381
 Transform:
