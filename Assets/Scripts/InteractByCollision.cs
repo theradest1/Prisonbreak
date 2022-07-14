@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InteractByCollision : MonoBehaviour
 {
-	public LayerMask layersAbleToTrigger;
+	public UnityEvent unityEvent;
+	public string action;
 	private void OnTriggerEnter(Collider collider)
 	{
 		if(collider.gameObject.GetComponent<PlayerMovement>() != null){
-			Debug.Log("hola");
+			Debug.Log("triggered interaction " + action);
+			//unityEvent.Invoke();
 		}
-		//if(other.gameObject.GetComponent<Player>() != null){
-		//	Debug.Log("player in radius");
-		//}
 	}
 }
