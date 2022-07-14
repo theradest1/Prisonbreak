@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
 	bool isGrounded;
 	public LayerMask groundMask;
 	public bool ableToMove = true;
+	public GameObject playerBody;
+	public GameObject gunHolder;
 
     // Start is called before the first frame update
     void Start()
@@ -43,8 +45,14 @@ public class PlayerMovement : MonoBehaviour
 		if(ableToMove){
 			controller.Move(move * speed * Time.deltaTime);
 			controller.Move(velocity * Time.deltaTime);
+			controller.enabled = true;
+			playerBody.SetActive(true);
+			gunHolder.SetActive(true);
 		}
 		else{
+			controller.enabled = false;
+			playerBody.SetActive(false);
+			gunHolder.SetActive(false);
 			velocity = new Vector3(0, 0, 0);
 		}
 	}

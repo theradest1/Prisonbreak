@@ -74,4 +74,10 @@ public class GameManager : MonoBehaviour
 		player.GetComponent<PlayerMovement>().ableToMove = false;
 		player.transform.SetParent(car.transform);
 	}
+
+	public void leaveCar(GameObject car){
+		car.GetComponent<CarController>().playerControlling = false;
+		player.GetComponent<PlayerMovement>().ableToMove = true;
+		player.transform.SetParent(null);
+	}
 }
