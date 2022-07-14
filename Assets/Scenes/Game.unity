@@ -6019,16 +6019,12 @@ MonoBehaviour:
   jumpPower: 10
   groundMask:
     serializedVersion: 2
-<<<<<<< Updated upstream
-    m_Bits: 1
-=======
     m_Bits: 385
   ableToMove: 1
   playerBody: {fileID: 1871028810}
   gunHolder: {fileID: 1408386566}
   targetPos: {x: 0, y: 0, z: 0}
   targetPosSpeed: 10
->>>>>>> Stashed changes
 --- !u!4 &2051250512
 Transform:
   m_ObjectHideFlags: 0
