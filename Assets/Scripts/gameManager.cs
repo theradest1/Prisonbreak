@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 	public GunManager gunManager;
 	public float camADSFOV;
 	public float camBaseFOV;
+	public GameObject player;
+	Vector3 pastLoc;
 
     // Update is called once per frame
     void Update()
@@ -59,8 +61,6 @@ public class GameManager : MonoBehaviour
 		healthSlider.value = health;
 		bulletsGUI.text = gunManager.bullets.ToString();
 	}
-<<<<<<< Updated upstream
-=======
 
 	public void getInCar(GameObject car){
 		car.GetComponent<CarController>().playerControlling = true;
@@ -76,5 +76,4 @@ public class GameManager : MonoBehaviour
 		player.transform.localPosition = pastLoc;
 		player.transform.SetParent(null);
 	}
->>>>>>> Stashed changes
 }

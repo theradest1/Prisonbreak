@@ -15,14 +15,12 @@ public class PlayerMovement : MonoBehaviour
 	public float jumpPower = 10f;
 	bool isGrounded;
 	public LayerMask groundMask;
-<<<<<<< Updated upstream
-=======
+
 	public bool ableToMove = true;
 	public GameObject playerBody;
 	public GameObject gunHolder;
 	public Vector3 targetPos;
 	public float targetPosSpeed;
->>>>>>> Stashed changes
 
     // Start is called before the first frame update
     void Start()
@@ -40,25 +38,13 @@ public class PlayerMovement : MonoBehaviour
 
 			isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-<<<<<<< Updated upstream
-		Vector3 move = transform.right * x + transform.forward * z;
-		controller.Move(move * speed * Time.deltaTime);
-=======
 			float x = Input.GetAxis("Horizontal");
 			float z = Input.GetAxis("Vertical");
->>>>>>> Stashed changes
 
 			Vector3 move = transform.right * x + transform.forward * z;
 
 			velocity.y += gravity * Time.deltaTime;
 
-<<<<<<< Updated upstream
-		if (Input.GetKeyDown("space") && isGrounded){
-			velocity.y += jumpPower;
-		}
-
-		controller.Move(velocity * Time.deltaTime);
-=======
 			if(isGrounded && velocity.y < 0){
 				velocity.y = 0;
 			}
@@ -76,6 +62,5 @@ public class PlayerMovement : MonoBehaviour
 			transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPos, targetPosSpeed * Time.deltaTime);
 			gunManager.actionTimer = 1f;
 		}
->>>>>>> Stashed changes
 	}
 }
