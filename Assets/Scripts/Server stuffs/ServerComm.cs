@@ -7,18 +7,25 @@ using UnityEngine.SceneManagement;
 
 public class ServerComm : MonoBehaviour
 {
+	[HideInInspector]
 	public string usrname;
+
+	[HideInInspector]
 	public string ID;
-	public string team = "prisoner";
+	[HideInInspector]
+	public string team = "none";
+	[HideInInspector]
 	public float level;
-	public Transform playerTransform;
+	Transform playerTransform;
 	public float updateDelay = .1f;
 	string serverAddress;
-	public EventManager eventManager;
+	EventManager eventManager;
 
     // Start is called before the first frame update
     void Start()
     {
+		eventManager = GameObject.Find("GameManager").GetComponent<EventManager>();
+		playerTransform = GameObject.Find("Player").transform;
 		serverAddress = GUIManager.workingAddress;
 		usrname = GUIManager.usrname;
 		if(serverAddress == null){

@@ -5,8 +5,7 @@ using UnityEngine;
 public class CarManager : MonoBehaviour
 {
 	public int maxCars;
-	[SerializeField]
-	List<GameObject> spawnedCars;
+	public List<GameObject> spawnedCars;
 	public GameObject carPrefab;
     // Start is called before the first frame update
     void Start()
