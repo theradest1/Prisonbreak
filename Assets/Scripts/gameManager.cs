@@ -6,19 +6,32 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-	public ServerComm serverComm;
-	public float health;
+	ServerComm serverComm;
+
+	[HideInInspector]
+	public float health = 100f;
 	//public TextMeshProUGUI healthGUI;
 	public Slider healthSlider;
 	public TextMeshProUGUI bulletsGUI;
-	public GunManager gunManager;
-	public CarManager carManager;
+	GunManager gunManager;
+	CarManager carManager;
 	public InteractByCollision interactByCollision;
 	public float camADSFOV;
 	public float camBaseFOV;
-	public GameObject player;
+	GameObject player;
+	PlayerMovement playerMovement;
 	Vector3 pastLoc;
 
+	void Start(){
+		serverComm = GameObject.Find("Server").GetComponent<ServerComm>();
+
+		gunManager = this.gameObject.GetComponent<GunManager>();
+		carManager = this.gameObject.GetComponent<CarManager>();
+
+		player = GameObject.Find("Player");
+		playerMovement = player.GetComponent<PlayerMovement>();
+
+	}
     // Update is called once per frame
     void Update()
     {
@@ -72,15 +85,18 @@ public class GameManager : MonoBehaviour
 
 	public void getInCar(GameObject car){
 		car.GetComponent<CarController>().playerControlling = true;
-		player.GetComponent<PlayerMovement>().ableToMove = false;
+		playerMovement.ableToMove = false;
+		playerMovement.drivingCar = true;
+
 		player.transform.SetParent(car.transform);
 		pastLoc = player.transform.localPosition;
-		player.transform.position = car.transform.position + Vector3.up * 3f;
+		playerMovement.targetPos = new Vector3(0, 3, -4);
 	}
 
 	public void leaveCar(GameObject car){
 		car.GetComponent<CarController>().playerControlling = false;
-		player.GetComponent<PlayerMovement>().ableToMove = true;
+		playerMovement.ableToMove = true;
+		playerMovement.drivingCar = false;
 		player.transform.localPosition = pastLoc;
 		player.transform.SetParent(null);
 	}
