@@ -687,14 +687,13 @@ MonoBehaviour:
   wheelFL: {fileID: 8311885231989033489}
   wheelBR: {fileID: 1484390150229700106}
   wheelBL: {fileID: 2007725046096258941}
+  headlights: {fileID: 7803982279409649861}
   acceleration: 2000
   brakingForce: 4000
   maxTurnAngle: 35
   currentTurnAngle: 0
   playerControlling: 0
   headlightsOn: 0
-  headlightL: {fileID: 7803982279422868226}
-  headlightR: {fileID: 7803982280376386755}
 --- !u!65 &4764787368368527076
 BoxCollider:
   m_ObjectHideFlags: 0

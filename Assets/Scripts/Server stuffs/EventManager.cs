@@ -5,11 +5,15 @@ using UnityEngine;
 public class EventManager : MonoBehaviour
 {
 	public GameObject playerPrefab;
-	public ServerComm serverComm;
-	public GameManager gameManager;
+	ServerComm serverComm;
+	GameManager gameManager;
 	public List<AudioClip> sounds;
 	public AudioSource audioSourcePrefab;
 
+	void Start(){
+		serverComm = GameObject.Find("Server").GetComponent<ServerComm>();
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+	}
     public void rawEvents(string eventString){
 		eventString = eventString.Substring(1, eventString.Length-2); //get rid of brackets
 		string[] events = eventString.Split(',');

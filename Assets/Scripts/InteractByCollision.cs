@@ -7,12 +7,17 @@ using UnityEngine.Events;
 
 public class InteractByCollision : MonoBehaviour
 {
-	public GameManager gameManager;
+	GameManager gameManager;
 	InteractableObject activeInteractableObject;
 	string action;
+
+	[HideInInspector]
 	public bool lockEvent = false;
-	//public UnityEvent unityEvent;
-	//public string action;
+	
+	void Start(){
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+	}
+
 	private void OnTriggerEnter(Collider collider)
 	{
 		InteractableObject interactableObject = collider.gameObject.GetComponent<InteractableObject>();

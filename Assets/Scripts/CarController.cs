@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
+	[Header("Parts")]
     public WheelCollider wheelFR;
     public WheelCollider wheelFL;
     public WheelCollider wheelBR;
     public WheelCollider wheelBL;
+	public GameObject headlights;
 
+	[Header("Settings")]
 	public float acceleration;
 	float currentAcceleration;
 	public float brakingForce;
 	float currentBrakingForce;
 	public float maxTurnAngle;
 	public float currentTurnAngle;
+
+	[HideInInspector]
 	public bool playerControlling = false;
+	[HideInInspector]
 	public bool headlightsOn = false;
-	public GameObject headlightL;
-	public GameObject headlightR;
 
 
     // Update is called once per frame
@@ -52,7 +56,6 @@ public class CarController : MonoBehaviour
 
 	public void SwitchHeadlights(){
 		headlightsOn = !headlightsOn;
-		headlightL.SetActive(headlightsOn);
-		headlightR.SetActive(headlightsOn);
+		headlights.SetActive(headlightsOn);
 	}
 }

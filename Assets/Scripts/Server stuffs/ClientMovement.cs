@@ -6,17 +6,24 @@ using TMPro;
 
 public class ClientMovement : MonoBehaviour
 {
+	[HideInInspector]
 	public Vector3 targetPos;
 	public float speed;
-	public bool smooth;
-	public Canvas canvas;
+	Canvas canvas;
 	public TextMeshProUGUI nameText;
 	public TextMeshProUGUI healthText;
+	[HideInInspector]
 	public GameObject player;
+	[HideInInspector]
 	public float health;
+	[HideInInspector]
 	public int heldGunID;
 	public List<GameObject> guns;
 
+	void Start(){
+		player = GameObject.Find("Player");
+		canvas = GameObject.Find("GUI").GetComponent<Canvas>();
+	}
 	public void SetUsrname(string usrname){
 		nameText.text = usrname;
 	}
@@ -27,12 +34,7 @@ public class ClientMovement : MonoBehaviour
     void Update()
     {
 		canvas.transform.LookAt(player.transform.position);
-		if(smooth){
-			transform.position = Vector3.Lerp(transform.position, targetPos, speed * Time.deltaTime);
-		}
-        else{
-			transform.position = targetPos;
-		}
+		transform.position = Vector3.Lerp(transform.position, targetPos, speed * Time.deltaTime);
     }
 
 	public void changeHeldItem(int newGunID){
