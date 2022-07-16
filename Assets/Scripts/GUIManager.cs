@@ -8,11 +8,14 @@ using System.Text.RegularExpressions; //for regex
 
 public class GUIManager : MonoBehaviour
 {
-	public static string usrname = "Usrname";
-	public static string workingAddress = "http://192.168.0.24:3000/";
+	public static string usrname;// = "Usrname";
+	public static string workingAddress;// = "http://192.168.0.24:3000/";
 	public TextMeshProUGUI usrnameError;
 	public TMP_InputField wantedUsername;
 
+	void Start(){
+		Cursor.lockState = CursorLockMode.None;
+	}
 	public void turnOffCanvas(GameObject canvas){
 		canvas.SetActive(false);
 	}
@@ -32,7 +35,7 @@ public class GUIManager : MonoBehaviour
 			Debug.Log("Trying to connect to public server ip.");
 			StartCoroutine(tryToConnect("http://75.100.205.73:3000/"));
 			Debug.Log("Trying to connect to local server ip.");
-			StartCoroutine(tryToConnect("http://192.168.0.24:3000/"));
+			StartCoroutine(tryToConnect("http://192.168.0.17:3000/"));
 		}
 		else{
 			usrnameError.text = "Username is not long enough";
