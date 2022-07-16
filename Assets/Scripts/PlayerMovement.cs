@@ -4,30 +4,40 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-	public CharacterController controller;
+	CharacterController controller;
 	GameManager gameManager;
 	GunManager gunManager;
 	public float speed = 10f;
 	public float gravity = -9.81f;
 	Vector3 velocity;
-	public Transform groundCheck;
+	Transform groundCheck;
 	public float groundDistance = .4f;
 	public float jumpPower = 10f;
 	bool isGrounded;
 	public LayerMask groundMask;
 
+	[HideInInspector]
 	public bool ableToMove = true;
+	[HideInInspector]
 	public bool drivingCar = false;
+
+	[HideInInspector]
 	public Vector3 targetPos; //this only works when able to move is false, also this is local
 	public float targetPosSpeed;
 
-	public GameObject playerBody;
-	public GameObject gunHolder;
+	GameObject playerBody;
+	GameObject gunHolder;
+
+	[HideInInspector]
 	public GameObject activeCar;
 
     // Start is called before the first frame update
     void Start()
     {
+		playerBody = GameObject.Find("Player Body");
+		gunHolder = GameObject.Find("guns");
+		groundCheck = GameObject.Find("GroundCheck").transform;
+		controller = this.gameObject.GetComponent<CharacterController>();
         //this.gameObject.transform.position = new Vector3(Random.Range(-10, 10), 200, Random.Range(-10, 10));
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		gunManager = gameManager.gameObject.GetComponent<GunManager>();
