@@ -771,6 +771,7 @@ MonoBehaviour:
   cam: {fileID: 963194225}
   gunID: 0
   gameManager: {fileID: 267940380}
+  actionTimer: 0
   hitMask:
     serializedVersion: 2
     m_Bits: 247
@@ -5697,8 +5698,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 385
   ableToMove: 1
+  drivingCar: 0
+  targetPos: {x: 0, y: 0, z: 0}
+  targetPosSpeed: 10
   playerBody: {fileID: 1871028810}
   gunHolder: {fileID: 1408386566}
+  activeCar: {fileID: 0}
 --- !u!4 &2051250512
 Transform:
   m_ObjectHideFlags: 0
