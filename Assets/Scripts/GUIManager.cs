@@ -25,7 +25,7 @@ public class GUIManager : MonoBehaviour
 	}
 
 	public void leaveGame(){
-		UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
+		//UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
 		Application.Quit();
 	}
 
