@@ -9,7 +9,7 @@ public class ClientMovement : MonoBehaviour
 	[HideInInspector]
 	public Vector3 targetPos;
 	public float speed;
-	Canvas canvas;
+	public Canvas canvas;
 	public TextMeshProUGUI nameText;
 	public TextMeshProUGUI healthText;
 	[HideInInspector]
@@ -20,10 +20,6 @@ public class ClientMovement : MonoBehaviour
 	public int heldGunID;
 	public List<GameObject> guns;
 
-	void Start(){
-		player = GameObject.Find("Player");
-		canvas = GameObject.Find("GUI").GetComponent<Canvas>();
-	}
 	public void SetUsrname(string usrname){
 		nameText.text = usrname;
 	}
