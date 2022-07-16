@@ -5,5 +5,4 @@ using UnityEngine;
 public class InteractableObject : MonoBehaviour
 {
     public string action;
-	public Vector3 drivePos;
 }

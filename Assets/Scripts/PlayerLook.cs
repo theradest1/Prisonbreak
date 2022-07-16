@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerLook : MonoBehaviour
 {
 	public float mouseSense = 100f;
-	public Transform player;
+	Transform player;
 	float xRot = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
+		player = GameObject.Find("Player").transform;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
