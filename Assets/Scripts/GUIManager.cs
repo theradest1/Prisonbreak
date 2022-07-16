@@ -8,8 +8,8 @@ using System.Text.RegularExpressions; //for regex
 
 public class GUIManager : MonoBehaviour
 {
-	public static string usrname;
-	public static string workingAddress;
+	public static string usrname = "Usrname";
+	public static string workingAddress = "http://192.168.0.24:3000/";
 	public TextMeshProUGUI usrnameError;
 	public TMP_InputField wantedUsername;
 
