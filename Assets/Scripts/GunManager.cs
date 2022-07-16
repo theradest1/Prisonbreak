@@ -4,25 +4,39 @@ using UnityEngine;
 
 public class GunManager : MonoBehaviour
 {
+	[HideInInspector]
 	public int bullets;
 	public List<GameObject> gunObjects;
+	[HideInInspector]
 	public List<GunInfo> gunInfos = new List<GunInfo>();
-	public GameObject gunHolder;
-	public GameObject cam;
+	GameObject gunHolder;
+	GameObject cam;
 	Camera camComponent;
+
+	[HideInInspector]
 	public int gunID = 0;
-	public GameManager gameManager;
+	GameManager gameManager;
+	[HideInInspector]
 	public float actionTimer;
 	public LayerMask hitMask;
-	public ServerComm serverComm;
+	ServerComm serverComm;
+	[HideInInspector]
 	public Vector3 gunTargetPos;
-	public float camTargetFOV = 60f;
+
+	[HideInInspector]
+	public float camTargetFOV = 90f;
 	public float camFOVChangeSpeed;
+
+	[HideInInspector]
 	public bool ads;
 	public GameObject bulletHitPrefab;
     // Start is called before the first frame update
     void Start()
     {
+		gunHolder = GameObject.Find("guns");
+		cam = GameObject.Find("Main Camera");
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+		serverComm = GameObject.Find("Server").GetComponent<ServerComm>();
 		//get gun info ahead of time for performance
         for(int i = 0; i < gunObjects.Count; i++){
 			gunInfos.Add(gunObjects[i].GetComponent<GunInfo>());
