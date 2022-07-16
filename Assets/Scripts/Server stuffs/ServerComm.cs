@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using SimpleJSON;
+using UnityEngine.SceneManagement;
 
 public class ServerComm : MonoBehaviour
 {
-	public string usrname = "TheMostAmazingUsrname";
+	public string usrname;
 	public string ID;
 	public string team = "prisoner";
 	public float level;
@@ -20,6 +21,9 @@ public class ServerComm : MonoBehaviour
     {
 		serverAddress = GUIManager.workingAddress;
 		usrname = GUIManager.usrname;
+		if(serverAddress == null){
+			SceneManager.LoadScene(0);
+		}
 		StartCoroutine(Join());
     }
 

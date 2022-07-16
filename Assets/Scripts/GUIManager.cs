@@ -13,6 +13,9 @@ public class GUIManager : MonoBehaviour
 	public TextMeshProUGUI usrnameError;
 	public TMP_InputField wantedUsername;
 
+	void Start(){
+		Cursor.lockState = CursorLockMode.None;
+	}
 	public void turnOffCanvas(GameObject canvas){
 		canvas.SetActive(false);
 	}
