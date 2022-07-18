@@ -8,8 +8,9 @@ using System.Text.RegularExpressions; //for regex
 
 public class GUIManager : MonoBehaviour
 {
-	public static string usrname;// = "Usrname";
+	public static string usrname;
 	public static string workingAddress;// = "http://192.168.0.24:3000/";
+	public static string team;
 	public TextMeshProUGUI usrnameError;
 	public TMP_InputField wantedUsername;
 
@@ -25,7 +26,7 @@ public class GUIManager : MonoBehaviour
 	}
 
 	public void leaveGame(){
-		//UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
+		UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
 		Application.Quit();
 	}
 
@@ -66,5 +67,9 @@ public class GUIManager : MonoBehaviour
 		}
 
 		Debug.Log("Couldn't connect through public IP");
+	}
+
+	public void changeTeams(string newTeam){
+		team = newTeam;
 	}
 }

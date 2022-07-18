@@ -9,6 +9,7 @@ var IDcounter = 0;
 var players = 0;
 var playerData = {};
 var changingData = {};
+var teamSpawnPos = {"police": "(0, 50, 0)", "prisoner": "(0, -25, 0)"};
 
 setInterval(checkDisconnectTimers, timoutCheck);
 
@@ -57,8 +58,9 @@ app.get("/join/:usrname/:team", (req, res) =>{
 	};
 	var ID = IDcounter;
 	playerData[ID] = data;
-	changingData[ID] = {"pos": "(0, 25, 0)", "rot": "(0, 0, 0)", "events": [], "ID": ID};
-	res.json({"ID": ID, "level": 3.7});
+	changingData[ID] = {"pos": "(0, 0, 0)", "rot": "(0, 0, 0)", "events": [], "ID": ID};
+	changingData[ID].pos = teamSpawnPos[req.params["team"]];
+	res.json({"ID": ID, "level": 3.7, "pos": changingData[ID].pos});
 	for(var subNode in changingData){
 		if(ID != subNode){
 			changingData[subNode].events.push("join " + ID + " " + req.params["usrname"] + " " + req.params["team"] + " " + playerData[ID].health);

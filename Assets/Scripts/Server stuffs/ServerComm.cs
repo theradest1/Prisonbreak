@@ -12,11 +12,11 @@ public class ServerComm : MonoBehaviour
 
 	[HideInInspector]
 	public string ID;
-	[HideInInspector]
 	public string team = "none";
 	[HideInInspector]
 	public float level;
 	Transform playerTransform;
+	PlayerMovement playerMovement;
 	public float updateDelay = .1f;
 	string serverAddress;
 	EventManager eventManager;
@@ -26,12 +26,16 @@ public class ServerComm : MonoBehaviour
     {
 		eventManager = GameObject.Find("GameManager").GetComponent<EventManager>();
 		playerTransform = GameObject.Find("Player").transform;
+		playerMovement = playerTransform.gameObject.GetComponent<PlayerMovement>();
 		serverAddress = GUIManager.workingAddress;
 		usrname = GUIManager.usrname;
+		team = GUIManager.team;
 		if(serverAddress == null){
 			SceneManager.LoadScene(0);
 		}
-		StartCoroutine(Join());
+		else{
+			StartCoroutine(Join());
+		}
     }
 
 	IEnumerator Join()
@@ -54,7 +58,7 @@ public class ServerComm : MonoBehaviour
 
 			JSONNode processedData = ProcessJSON(data);
 			ID = processedData["ID"];
-			//playerTransform.position = new Vector3(0f, 0f, 0f); //change to get from node
+			playerMovement.teleport(StringToVector3(processedData["pos"]));
 			level = processedData["level"];
 
 			GameObject.Find("Player").name = ID;
@@ -122,7 +126,7 @@ public class ServerComm : MonoBehaviour
 			Debug.Log("Left server succesfully");
 		}
 
-		//UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
+		UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
 		Application.Quit();
 		
 	}

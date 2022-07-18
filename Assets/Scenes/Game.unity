@@ -676,16 +676,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7718b0d17e8f3574c862a315e5dd15f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverComm: {fileID: 311639550}
   health: 100
   healthSlider: {fileID: 1649617474}
   bulletsGUI: {fileID: 77130521}
-  gunManager: {fileID: 267940384}
-  carManager: {fileID: 267940385}
   interactByCollision: {fileID: 2051250514}
   camADSFOV: 60
   camBaseFOV: 90
-  player: {fileID: 2051250510}
 --- !u!4 &267940381
 Transform:
   m_ObjectHideFlags: 0
@@ -714,8 +710,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 7317468777378453335, guid: 770c026d7263c4340a54271a210e4630, type: 3}
-  serverComm: {fileID: 311639550}
-  gameManager: {fileID: 267940380}
   sounds:
   - {fileID: 8300000, guid: d3247579c549643a5b3a95f9224eaf3c, type: 3}
   - {fileID: 8300000, guid: e7632c6401c09437e83de45d33c5858e, type: 3}
@@ -767,15 +761,11 @@ MonoBehaviour:
   - {fileID: 658112513}
   - {fileID: 1169606124}
   gunInfos: []
-  gunHolder: {fileID: 1408386566}
-  cam: {fileID: 963194225}
   gunID: 0
-  gameManager: {fileID: 267940380}
   actionTimer: 0
   hitMask:
     serializedVersion: 2
     m_Bits: 247
-  serverComm: {fileID: 311639550}
   gunTargetPos: {x: 0, y: 0, z: 0}
   camTargetFOV: 60
   camFOVChangeSpeed: 10
@@ -2843,11 +2833,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usrname: TheBetterestName
   ID: 
-  team: prisoner
+  team: police
   level: 0
-  playerTransform: {fileID: 2051250512}
   updateDelay: 0.05
-  eventManager: {fileID: 267940382}
 --- !u!4 &311639551
 Transform:
   m_ObjectHideFlags: 0
@@ -3182,15 +3170,15 @@ MonoBehaviour:
   damage: 1
   kickback: 8
   recoverySpeed: 15
-  volume: 1
   totalBullets: 10
   reloadTime: 0.7
   shootDelay: 0.2
   shootSoundID: 4
   reloadSoundID: 1
-  automatic: 0
   adsPos: {x: 0, y: -0.07, z: 0.44}
   basePos: {x: 0.37, y: -0.27, z: 0.62}
+  automatic: 0
+  volume: 1
 --- !u!1001 &660236738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3277,15 +3265,15 @@ MonoBehaviour:
   damage: 1
   kickback: 12
   recoverySpeed: 10
-  volume: 1
   totalBullets: 30
   reloadTime: 1
   shootDelay: 0.07
   shootSoundID: 2
   reloadSoundID: 12
-  automatic: 1
   adsPos: {x: 0, y: -0.17, z: 0.72}
   basePos: {x: 0.46, y: -0.36, z: 0.41}
+  automatic: 1
+  volume: 1
 --- !u!1 &702552221
 GameObject:
   m_ObjectHideFlags: 0
@@ -3973,7 +3961,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSense: 500
-  player: {fileID: 2051250512}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4408,15 +4395,15 @@ MonoBehaviour:
   damage: 60
   kickback: 100
   recoverySpeed: 2
-  volume: 0
   totalBullets: 6
   reloadTime: 5
   shootDelay: 4
   shootSoundID: 0
   reloadSoundID: 12
-  automatic: 0
   adsPos: {x: 0, y: -0.3, z: 0.65}
   basePos: {x: 0.31, y: -0.41, z: 0.51}
+  automatic: 0
+  volume: 0
 --- !u!1 &1270476363
 GameObject:
   m_ObjectHideFlags: 0
@@ -5688,10 +5675,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a02776c570e14834ebe7f362dc15e53a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 2051250513}
   speed: 10
   gravity: -19.6
-  groundCheck: {fileID: 295226253}
   groundDistance: 0.4
   jumpPower: 10
   groundMask:
@@ -5701,8 +5686,6 @@ MonoBehaviour:
   drivingCar: 0
   targetPos: {x: 0, y: 0, z: 0}
   targetPosSpeed: 10
-  playerBody: {fileID: 1871028810}
-  gunHolder: {fileID: 1408386566}
   activeCar: {fileID: 0}
 --- !u!4 &2051250512
 Transform:
@@ -5712,7 +5695,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2051250510}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: -76.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5754,7 +5737,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00038ae8cebba0e438a11cc2d1be4897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 267940380}
   lockEvent: 0
 --- !u!1001 &2063619428
 PrefabInstance:
