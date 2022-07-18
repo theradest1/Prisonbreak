@@ -38,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
 		gunHolder = GameObject.Find("guns");
 		groundCheck = GameObject.Find("GroundCheck").transform;
 		controller = this.gameObject.GetComponent<CharacterController>();
-        //this.gameObject.transform.position = new Vector3(Random.Range(-10, 10), 200, Random.Range(-10, 10));
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		gunManager = gameManager.gameObject.GetComponent<GunManager>();
     }
@@ -81,5 +80,11 @@ public class PlayerMovement : MonoBehaviour
 				gunHolder.SetActive(false);
 			}
 		}
+	}
+
+	public void teleport(Vector3 pos){
+		controller.enabled = false;
+		this.gameObject.transform.position = pos;
+		controller.enabled = true;
 	}
 }
