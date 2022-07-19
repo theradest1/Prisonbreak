@@ -45,10 +45,21 @@ public class EventManager : MonoBehaviour
 					//Debug.Log("Change held item event");
 					changeHeldItem(eventData[1], eventData[2]);
 					break;
+				case "notify":
+					notify(eventData[1]);
+					break;
+				default:
+					Debug.LogError("Unknown event: " + eventData[0]);
+					break;
 			}
         }
 	}
 
+	void notify(string heistID){
+		if(serverComm.team == "police"){
+			Debug.Log("Heist started at location " + heistID);
+		}
+	}
 
 	//These events are not specifically for this client, Ex: leave() is not if this client leaves
 	void damage(string ID, string damage){
