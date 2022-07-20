@@ -20,11 +20,13 @@ public class ServerComm : MonoBehaviour
 	public float updateDelay = .1f;
 	string serverAddress;
 	EventManager eventManager;
+	GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
 		eventManager = GameObject.Find("GameManager").GetComponent<EventManager>();
+		gameManager = eventManager.gameObject.GetComponent<GameManager>();
 		playerTransform = GameObject.Find("Player").transform;
 		playerMovement = playerTransform.gameObject.GetComponent<PlayerMovement>();
 		serverAddress = GUIManager.workingAddress;
@@ -60,6 +62,7 @@ public class ServerComm : MonoBehaviour
 			ID = processedData["ID"];
 			playerMovement.teleport(StringToVector3(processedData["pos"]));
 			level = processedData["level"];
+			gameManager.money = float.Parse(processedData["money"]);
 
 			GameObject.Find("Player").name = ID;
 			StartCoroutine(updatePlayers());
