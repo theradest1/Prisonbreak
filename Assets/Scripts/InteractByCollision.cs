@@ -43,7 +43,6 @@ public class InteractByCollision : MonoBehaviour
 		if(activeInteractableObject != null){
 			lockEvent = true;
 			activeInteractableObject.callUnityEvent();
-			gameManager.ShowEvent(activeInteractableObject.action);
 			Debug.Log("Interacted with: " + activeInteractableObject.action);
 
 			//all events that can be triggered by pressing 'e'
@@ -60,6 +59,8 @@ public class InteractByCollision : MonoBehaviour
 					gameManager.leaveCar(activeInteractableObject.gameObject);
 					break;
 				case "Take Money":
+					break;
+				case "Get Stolen Money":
 					break;
 				default:
 					Debug.LogError("Unknown action: " + action);

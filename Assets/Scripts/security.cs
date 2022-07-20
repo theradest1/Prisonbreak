@@ -9,11 +9,18 @@ public class security : MonoBehaviour
 	public float damageWhenTouched;
 	public bool notifyPoliceWhenTouched;
 	public int heistID;
+	HeistScript heistScript;
 	public bool triggerWhenHitByPolice;
 
 	void Start(){
 		serverComm = GameObject.Find("Server").GetComponent<ServerComm>();
+		heistScript = GameObject.Find("heist " + heistID).GetComponent<HeistScript>();
+
+		if(heistScript == null){
+			Debug.LogError("Couldn't find 'heist " + heistID + "' to get script");
+		}
 	}
+
     private void OnTriggerEnter(Collider collider)
 	{
 		if(collider.GetComponent<PlayerMovement>() != null){

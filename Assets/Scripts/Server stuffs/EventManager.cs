@@ -56,6 +56,7 @@ public class EventManager : MonoBehaviour
 	}
 
 	void notify(string heistID){
+		GameObject.Find("heist " + heistID).GetComponent<HeistScript>().startAlarm();
 		if(serverComm.team == "police"){
 			Debug.Log("Heist started at location " + heistID);
 		}

@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
 	public TextMeshProUGUI bulletsGUI;
 	public TextMeshProUGUI moneyGUI;
 	public TextMeshProUGUI stolenMoneyGUI;
-	public TextMeshProUGUI shownEvent;
 	public TextMeshProUGUI actionGUI;
 	public string action;
 	GunManager gunManager;
@@ -127,7 +126,9 @@ public class GameManager : MonoBehaviour
 		updateGUI();
 	}
 
-	public void ShowEvent(string eventName){
-		shownEvent.text = eventName;
+	public void getStolenMoney(){
+		money += stolenMoney;
+		stolenMoney = 0f;
+		updateGUI();
 	}
 }
