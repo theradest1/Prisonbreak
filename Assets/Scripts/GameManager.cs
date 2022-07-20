@@ -44,10 +44,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if(health < 100f){
-			health += healthIncreasePerFrame * Time.deltaTime;
-			healthSlider.value = health;
-		}
+		//if(health < 100f){
+		//	health += healthIncreasePerFrame * Time.deltaTime;
+		//	healthSlider.value = health;
+		//}
 		//input
         if (Input.GetKeyDown("escape"))
         {
@@ -91,11 +91,6 @@ public class GameManager : MonoBehaviour
     }
 
 	public void updateGUI(){
-		//healthGUI.text = health.ToString();
-		if(health <= 0f){
-			health = 100f;
-			playerMovement.teleport(new Vector3(-10, -20, -10));
-		}
 		moneyGUI.text = "$" + money;
 		stolenMoneyGUI.text = "$" + stolenMoney;
 		healthSlider.value = health;
@@ -119,6 +114,7 @@ public class GameManager : MonoBehaviour
 		playerMovement.drivingCar = false;
 		player.transform.localPosition = pastLoc;
 		player.transform.SetParent(null);
+		player.transform.rotation = Quaternion.Euler(0, 0, 0);
 	}
 
 	public void addToStolenMoney(float newStolenMoney){

@@ -10,6 +10,7 @@ public class HeistScript : MonoBehaviour
 	[HideInInspector]
 	public bool silentAlarm = false;
 	public float alarmLength;
+	
     // Update is called once per frame
     void Update()
     {
