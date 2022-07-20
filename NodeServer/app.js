@@ -9,7 +9,7 @@ var IDcounter = 0;
 var players = 0;
 var playerData = {};
 var changingData = {};
-var teamSpawnPos = {"police": "(0, 50, 0)", "prisoner": "(0, -25, 0)"};
+var teamSpawnPos = {"police": "(-10, 50, -10)", "prisoner": "(-10, -20, -10)"};
 
 setInterval(checkDisconnectTimers, timoutCheck);
 
@@ -47,8 +47,9 @@ app.get("/join/:usrname/:team", (req, res) =>{
 	var data = {
 		"name": req.params["usrname"],
 		"ID": IDcounter,
+		"money": 0,
 		"team": req.params["team"],
-		"level": 3.7, //Get this and inventory from a server-stored JSON file
+		"level": 3.7, //Get this, inventory, and money from a server-stored JSON file
 		"health": 100,
 		"timout": 0,
 		"inventory": [
@@ -60,7 +61,7 @@ app.get("/join/:usrname/:team", (req, res) =>{
 	playerData[ID] = data;
 	changingData[ID] = {"pos": "(0, 0, 0)", "rot": "(0, 0, 0)", "events": [], "ID": ID};
 	changingData[ID].pos = teamSpawnPos[req.params["team"]];
-	res.json({"ID": ID, "level": 3.7, "pos": changingData[ID].pos});
+	res.json({"ID": ID, "level": 3.7, "pos": changingData[ID].pos, "money": playerData[ID].money});
 	for(var subNode in changingData){
 		if(ID != subNode){
 			changingData[subNode].events.push("join " + ID + " " + req.params["usrname"] + " " + req.params["team"] + " " + playerData[ID].health);

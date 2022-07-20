@@ -7,12 +7,14 @@ public class EventManager : MonoBehaviour
 	public GameObject playerPrefab;
 	ServerComm serverComm;
 	GameManager gameManager;
+	PlayerMovement playerMovement;
 	public List<AudioClip> sounds;
 	public AudioSource audioSourcePrefab;
 
 	void Start(){
 		serverComm = GameObject.Find("Server").GetComponent<ServerComm>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+		playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
 	}
     public void rawEvents(string eventString){
 		eventString = eventString.Substring(1, eventString.Length-2); //get rid of brackets
@@ -45,10 +47,22 @@ public class EventManager : MonoBehaviour
 					//Debug.Log("Change held item event");
 					changeHeldItem(eventData[1], eventData[2]);
 					break;
+				case "notify":
+					notify(eventData[1]);
+					break;
+				default:
+					Debug.LogError("Unknown event: " + eventData[0]);
+					break;
 			}
         }
 	}
 
+	void notify(string heistID){
+		GameObject.Find("heist " + heistID).GetComponent<HeistScript>().startAlarm();
+		if(serverComm.team == "police"){
+			Debug.Log("Heist started at location " + heistID);
+		}
+	}
 
 	//These events are not specifically for this client, Ex: leave() is not if this client leaves
 	void damage(string ID, string damage){
@@ -61,6 +75,10 @@ public class EventManager : MonoBehaviour
 		}
 		else{
 			gameManager.health -= fDamage;
+			if(gameManager.health <= 0f){
+				playerMovement.teleport(new Vector3(-10, -20, -10));
+				StartCoroutine(serverComm.Event("damage " + ID + " " + -(100 - gameManager.health)));
+			}
 			gameManager.updateGUI();
 		}
 		

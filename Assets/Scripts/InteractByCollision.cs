@@ -26,12 +26,23 @@ public class InteractByCollision : MonoBehaviour
 			Debug.Log("Able to interact: " + interactableObject.action);
 			activeInteractableObject = interactableObject;
 			action = interactableObject.action;
+			gameManager.action = "Press E to " + action;
+			gameManager.updateGUI();
 			//unityEvent.Invoke();
 		}
 	}
 
+	void OnTriggerExit(Collider collider){
+		action = "";
+		gameManager.action = action;
+		gameManager.updateGUI();
+		activeInteractableObject = null;
+	}
+
 	public void triggerEvent(){
 		if(activeInteractableObject != null){
+			lockEvent = true;
+			activeInteractableObject.callUnityEvent();
 			Debug.Log("Interacted with: " + activeInteractableObject.action);
 
 			//all events that can be triggered by pressing 'e'
@@ -40,12 +51,22 @@ public class InteractByCollision : MonoBehaviour
 					gameManager.getInCar(activeInteractableObject.gameObject);
 					lockEvent = true;
 					action = "Leave Car";
+					gameManager.action = "Press E to " +  action;
+					gameManager.updateGUI();
 					break;
 				case "Leave Car":
 					lockEvent = false;
 					gameManager.leaveCar(activeInteractableObject.gameObject);
 					break;
+				case "Take Money":
+					break;
+				case "Get Stolen Money":
+					break;
+				default:
+					Debug.LogError("Unknown action: " + action);
+					break;
 			}
+			lockEvent = false;
 		}
 	}
 }

@@ -10,9 +10,18 @@ public class GameManager : MonoBehaviour
 
 	[HideInInspector]
 	public float health = 100f;
+	public float healthIncreasePerFrame = .001f;
+	public float money = 0f;
+
+	[HideInInspector]
+	public float stolenMoney = 0f;
 	//public TextMeshProUGUI healthGUI;
 	public Slider healthSlider;
 	public TextMeshProUGUI bulletsGUI;
+	public TextMeshProUGUI moneyGUI;
+	public TextMeshProUGUI stolenMoneyGUI;
+	public TextMeshProUGUI actionGUI;
+	public string action;
 	GunManager gunManager;
 	CarManager carManager;
 	public InteractByCollision interactByCollision;
@@ -35,6 +44,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		//if(health < 100f){
+		//	health += healthIncreasePerFrame * Time.deltaTime;
+		//	healthSlider.value = health;
+		//}
 		//input
         if (Input.GetKeyDown("escape"))
         {
@@ -78,9 +91,11 @@ public class GameManager : MonoBehaviour
     }
 
 	public void updateGUI(){
-		//healthGUI.text = health.ToString();
+		moneyGUI.text = "$" + money;
+		stolenMoneyGUI.text = "$" + stolenMoney;
 		healthSlider.value = health;
 		bulletsGUI.text = gunManager.bullets.ToString();
+		actionGUI.text = action;
 	}
 
 	public void getInCar(GameObject car){
@@ -99,5 +114,17 @@ public class GameManager : MonoBehaviour
 		playerMovement.drivingCar = false;
 		player.transform.localPosition = pastLoc;
 		player.transform.SetParent(null);
+		player.transform.rotation = Quaternion.Euler(0, 0, 0);
+	}
+
+	public void addToStolenMoney(float newStolenMoney){
+		stolenMoney += newStolenMoney;
+		updateGUI();
+	}
+
+	public void getStolenMoney(){
+		money += stolenMoney;
+		stolenMoney = 0f;
+		updateGUI();
 	}
 }
