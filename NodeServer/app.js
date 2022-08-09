@@ -55,7 +55,7 @@ app.get("/join/:usrname/:team", (req, res) =>{
 		"inventory": [
 			{ item: "pistol" },
 			{ item: "keycard" }
-		],
+		], 
 	};
 	var ID = IDcounter;
 	playerData[ID] = data;

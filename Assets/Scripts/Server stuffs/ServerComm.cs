@@ -129,7 +129,7 @@ public class ServerComm : MonoBehaviour
 			Debug.Log("Left server succesfully");
 		}
 
-		UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
+		//UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
 		Application.Quit();
 		
 	}
