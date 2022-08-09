@@ -21,10 +21,12 @@ public class ServerComm : MonoBehaviour
 	string serverAddress;
 	EventManager eventManager;
 	GameManager gameManager;
+	CityCreator cityCreator;
 
     // Start is called before the first frame update
     void Start()
     {
+		cityCreator = GameObject.Find("CityCreator").GetComponent<CityCreator>();
 		eventManager = GameObject.Find("GameManager").GetComponent<EventManager>();
 		gameManager = eventManager.gameObject.GetComponent<GameManager>();
 		playerTransform = GameObject.Find("Player").transform;
@@ -66,6 +68,7 @@ public class ServerComm : MonoBehaviour
 
 			GameObject.Find("Player").name = ID;
 			StartCoroutine(updatePlayers());
+			StartCoroutine(cityCreator.generateCity(int.Parse(processedData["seed"])));
 		}
 	}
 

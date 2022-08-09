@@ -10,7 +10,7 @@ public class CityCreator : MonoBehaviour
 	public List<CityBlock> rareBuildings;
 	[Range(0f, 1f)]
 	public float rareBuildingFrequency;
-	public int seed = 0;
+	//public int seed = 0;
 	public float spacing; //Distance between each city block
 	public int sizeX; //x and y of city (in blocks)
 	public int sizeY;
@@ -33,10 +33,11 @@ public class CityCreator : MonoBehaviour
 
     void Start()
     {
-		StartCoroutine(generateCity());
+		//StartCoroutine(generateCity());
     }
 
-	IEnumerator generateCity(){
+	public IEnumerator generateCity(int seed){
+		Debug.Log(seed);
 		if(City != null){
 			Destroy(City);
 		}
@@ -85,9 +86,9 @@ public class CityCreator : MonoBehaviour
 		return null;
 	}
 
-	void OnValidate(){
-		if(Application.isPlaying){
-			StartCoroutine(generateCity());
-		}
-	}
+	//void OnValidate(){
+	//	if(Application.isPlaying){
+	//		StartCoroutine(generateCity());
+	//	}
+	//}
 }
