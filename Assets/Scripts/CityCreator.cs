@@ -63,15 +63,17 @@ public class CityCreator : MonoBehaviour
 				CityBlock block = blocks[4];
 				for(int buildingX = 0; buildingX < blockSize; buildingX++){
 					for(int buildingY = 0; buildingY < blockSize; buildingY++){
-						Quaternion blockRotation = Quaternion.Euler(0f, Random.Range(0, 3) * 90, 0f);
+						if((buildingX == 0 || buildingX == blockSize - 1) || (buildingY == 0 || buildingY == blockSize - 1)){
+							Quaternion blockRotation = Quaternion.Euler(0f, Random.Range(0, 3) * 90, 0f);
 						
-						GameObject baseFloor = Instantiate(block.gameObject, new Vector3(x * blockSpacing + buildingX * buildingSpacing, 0f, y * blockSpacing + buildingY * buildingSpacing), blockRotation, City.transform);
-						baseFloor.transform.GetChild(0).GetComponent<MeshCollider>().enabled = true;
+							GameObject baseFloor = Instantiate(block.gameObject, new Vector3(x * blockSpacing + buildingX * buildingSpacing + buildingSpacing * blockSize, 0f, y * blockSpacing + buildingY * buildingSpacing + buildingSpacing * blockSize), blockRotation, City.transform);
+							baseFloor.transform.GetChild(0).GetComponent<MeshCollider>().enabled = true;
 
-						int buildingHeight = Mathf.RoundToInt(Mathf.Pow(GetPerlinValue(x * blockSize + buildingX, y * blockSize + buildingY), perlinExponent) * maxHeight) + Random.Range(-inBlockNoise, inBlockNoise);
-						
-						for(int floor = 1; floor < buildingHeight; floor++){
-							Instantiate(block.gameObject, new Vector3(x * blockSpacing + buildingX * buildingSpacing, floor * heightSpacing, y * blockSpacing + buildingY * buildingSpacing), blockRotation, City.transform);
+							int buildingHeight = Mathf.RoundToInt(Mathf.Pow(GetPerlinValue(x * blockSize + buildingX, y * blockSize + buildingY), perlinExponent) * maxHeight) + Random.Range(-inBlockNoise, inBlockNoise);
+							
+							for(int floor = 1; floor < buildingHeight; floor++){
+								Instantiate(block.gameObject, new Vector3(x * blockSpacing + buildingX * buildingSpacing + buildingSpacing * blockSize, floor * heightSpacing, y * blockSpacing + buildingY * buildingSpacing + buildingSpacing * blockSize), blockRotation, City.transform);
+							}
 						}
 					}
 				}
