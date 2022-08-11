@@ -163,19 +163,19 @@ MonoBehaviour:
   - {fileID: -4772605505469206784, guid: 2b6781acbd2efd3469c7699bd1884e2e, type: 3}
   scale: 3
   blockSize: 3
-  inBlockNoise: 3
+  inBlockNoise: 1
   rareBuildingFrequency: 0.1
   blockSpacing: 80
   buildingSpacing: 18
   sizeX: 10
   sizeY: 10
   triesBeforeQuit: 0
-  perlinNoise: 0
+  perlinNoise: 1
   scatterChance: 0.7
   maxScatterAmount: 2
   exponent: 2
   perlinScale: 3
-  maxHeight: 20
+  maxHeight: 25
   heightSpacing: 12.1
   perlinExponent: 3
 --- !u!4 &37016946

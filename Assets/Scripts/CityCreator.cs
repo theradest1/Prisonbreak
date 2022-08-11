@@ -61,7 +61,6 @@ public class CityCreator : MonoBehaviour
 				//Debug.Log("X: " + x + ", Y: " + y);
 				//CityBlock block = blocks[Mathf.RoundToInt(GetPerlinValue(x, y) * (blocks.Count - 1))];//GetBlock(distanceToCenter);
 				CityBlock block = blocks[4];
-				int blockHeight = Mathf.RoundToInt(Mathf.Pow(GetPerlinValue(x, y), perlinExponent) * maxHeight);
 				for(int buildingX = 0; buildingX < blockSize; buildingX++){
 					for(int buildingY = 0; buildingY < blockSize; buildingY++){
 						Quaternion blockRotation = Quaternion.Euler(0f, Random.Range(0, 3) * 90, 0f);
@@ -69,7 +68,7 @@ public class CityCreator : MonoBehaviour
 						GameObject baseFloor = Instantiate(block.gameObject, new Vector3(x * blockSpacing + buildingX * buildingSpacing, 0f, y * blockSpacing + buildingY * buildingSpacing), blockRotation, City.transform);
 						baseFloor.transform.GetChild(0).GetComponent<MeshCollider>().enabled = true;
 
-						int buildingHeight = blockHeight + Random.Range(-inBlockNoise, inBlockNoise);
+						int buildingHeight = Mathf.RoundToInt(Mathf.Pow(GetPerlinValue(x * blockSize + buildingX, y * blockSize + buildingY), perlinExponent) * maxHeight) + Random.Range(-inBlockNoise, inBlockNoise);
 						
 						for(int floor = 1; floor < buildingHeight; floor++){
 							Instantiate(block.gameObject, new Vector3(x * blockSpacing + buildingX * buildingSpacing, floor * heightSpacing, y * blockSpacing + buildingY * buildingSpacing), blockRotation, City.transform);
@@ -83,8 +82,10 @@ public class CityCreator : MonoBehaviour
 	}
 
 	float GetPerlinValue(int x, int y){
-		float xCoord = (float)x/sizeX * perlinScale;
-		float yCoord = (float)y/sizeY * perlinScale;
+		float xCoord = (float)x/(sizeX * blockSize + blockSize) * perlinScale;
+		float yCoord = (float)y/(sizeY * blockSize + blockSize) * perlinScale;
+		Debug.Log(xCoord);
+		Debug.Log(yCoord);
 
 		return Mathf.PerlinNoise(xCoord, yCoord);
 	}
