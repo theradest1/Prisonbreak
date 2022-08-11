@@ -8,10 +8,14 @@ public class CityCreator : MonoBehaviour
 	public bool teirGeneration; //experimental
 	public List<CityBlock> blocks; //list of all blocks
 	public List<CityBlock> rareBuildings;
+	public float scale;
+	public int blockSize;
+	public int inBlockNoise;
 	[Range(0f, 1f)]
 	public float rareBuildingFrequency;
 	//public int seed = 0;
-	public float spacing; //Distance between each city block
+	public float blockSpacing; //Distance between each city block
+	public float buildingSpacing;
 	public int sizeX; //x and y of city (in blocks)
 	public int sizeY;
 	GameObject City = null;
@@ -22,6 +26,7 @@ public class CityCreator : MonoBehaviour
 	
 	
 	[Header("Teir Generation:")]
+	public bool perlinNoise;
 	[Range(0f, 1f)]
 	public float scatterChance;
 	[Range(1, 10)]
@@ -29,15 +34,19 @@ public class CityCreator : MonoBehaviour
 	[Range(1, 10)]
 	public int exponent;
 
-	
+	[Header("Perlin noise:")]
+	public float perlinScale;
+	public int maxHeight;
+	public float heightSpacing;
+	public int perlinExponent;
 
-    void Start()
-    {
+    //void Start()
+    //{
 		//StartCoroutine(generateCity());
-    }
+    //}
 
 	public IEnumerator generateCity(int seed){
-		Debug.Log(seed);
+		Debug.Log("world seed: " + seed);
 		if(City != null){
 			Destroy(City);
 		}
@@ -46,14 +55,38 @@ public class CityCreator : MonoBehaviour
 		float maxDist = sizeX/2 * Mathf.Sqrt(2);
         for(int x = 0; x < sizeX; x++){
 			for(int y = 0; y < sizeY; y++){
-				distanceToCenter = Vector2.Distance(new Vector2(x, y), new Vector2(sizeX/2, sizeY/2))/maxDist;
-				CityBlock block = GetBlock(distanceToCenter);
-				if(block != null){
-					Instantiate(block.gameObject, new Vector3(x * spacing, 0f, y * spacing), Quaternion.Euler(0f, Random.Range(0, 3) * 90, 0f), City.transform);
+				//distanceToCenter = Vector2.Distance(new Vector2(x, y), new Vector2(sizeX/2, sizeY/2))/maxDist;
+				//Debug.Log(GetPerlinValue(x, y));
+				//Debug.Log(Mathf.RoundToInt(GetPerlinValue(x, y) * 6));
+				//Debug.Log("X: " + x + ", Y: " + y);
+				//CityBlock block = blocks[Mathf.RoundToInt(GetPerlinValue(x, y) * (blocks.Count - 1))];//GetBlock(distanceToCenter);
+				CityBlock block = blocks[4];
+				int blockHeight = Mathf.RoundToInt(Mathf.Pow(GetPerlinValue(x, y), perlinExponent) * maxHeight);
+				for(int buildingX = 0; buildingX < blockSize; buildingX++){
+					for(int buildingY = 0; buildingY < blockSize; buildingY++){
+						Quaternion blockRotation = Quaternion.Euler(0f, Random.Range(0, 3) * 90, 0f);
+						
+						GameObject baseFloor = Instantiate(block.gameObject, new Vector3(x * blockSpacing + buildingX * buildingSpacing, 0f, y * blockSpacing + buildingY * buildingSpacing), blockRotation, City.transform);
+						baseFloor.transform.GetChild(0).GetComponent<MeshCollider>().enabled = true;
+
+						int buildingHeight = blockHeight + Random.Range(-inBlockNoise, inBlockNoise);
+						
+						for(int floor = 1; floor < buildingHeight; floor++){
+							Instantiate(block.gameObject, new Vector3(x * blockSpacing + buildingX * buildingSpacing, floor * heightSpacing, y * blockSpacing + buildingY * buildingSpacing), blockRotation, City.transform);
+						}
+					}
 				}
 			}
 		}
+		City.transform.localScale = new Vector3(scale, scale, scale);
 		yield return null;
+	}
+
+	float GetPerlinValue(int x, int y){
+		float xCoord = (float)x/sizeX * perlinScale;
+		float yCoord = (float)y/sizeY * perlinScale;
+
+		return Mathf.PerlinNoise(xCoord, yCoord);
 	}
 
 	CityBlock GetBlock(float distanceToCenter){
@@ -86,9 +119,9 @@ public class CityCreator : MonoBehaviour
 		return null;
 	}
 
-	//void OnValidate(){
-	//	if(Application.isPlaying){
-	//		StartCoroutine(generateCity());
-	//	}
-	//}
+	void OnValidate(){
+		if(Application.isPlaying){
+			StartCoroutine(generateCity(0));
+		}
+	}
 }
