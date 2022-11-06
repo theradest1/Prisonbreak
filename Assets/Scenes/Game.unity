@@ -166,7 +166,7 @@ MonoBehaviour:
   inBlockNoise: 1
   rareBuildingFrequency: 0.1
   blockSpacing: 80
-  buildingSpacing: 18
+  buildingSpacing: 23
   sizeX: 10
   sizeY: 10
   triesBeforeQuit: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   exponent: 2
   perlinScale: 3
   maxHeight: 25
-  heightSpacing: 12.1
+  heightSpacing: 7.8
   perlinExponent: 3
 --- !u!4 &37016946
 Transform:
@@ -2892,7 +2892,7 @@ MonoBehaviour:
   ID: 
   team: police
   level: 0
-  updateDelay: 0.05
+  updateDelay: 0
 --- !u!4 &311639551
 Transform:
   m_ObjectHideFlags: 0
@@ -4260,13 +4260,13 @@ LightingSettings:
   serializedVersion: 4
   m_GIWorkflowMode: 1
   m_EnableBakedLightmaps: 1
-  m_EnableRealtimeLightmaps: 0
+  m_EnableRealtimeLightmaps: 1
   m_RealtimeEnvironmentLighting: 1
   m_BounceScale: 1
   m_AlbedoBoost: 1
   m_IndirectOutputScale: 1
   m_UsingShadowmask: 1
-  m_BakeBackend: 1
+  m_BakeBackend: 2
   m_LightmapMaxSize: 1024
   m_BakeResolution: 40
   m_Padding: 2
