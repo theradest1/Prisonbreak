@@ -43,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		gunManager = gameManager.gameObject.GetComponent<GunManager>();
 		serverComm = GameObject.Find("Server").GetComponent<ServerComm>();
-		Debug.Log(serverComm);
 		InvokeRepeating("footstep", footstepIntervals, footstepIntervals);
     }
 
