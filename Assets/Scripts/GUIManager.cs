@@ -10,7 +10,7 @@ public class GUIManager : MonoBehaviour
 {
 	public static string usrname;// = "bruhMoment";
 	public static string workingAddress;// = "http://192.168.0.20:3000/";
-	public static string team;
+	public static string team = "prisoner";
 	public TextMeshProUGUI usrnameError;
 	public TMP_InputField wantedUsername;
 

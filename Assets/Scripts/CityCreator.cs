@@ -4,7 +4,21 @@ using UnityEngine;
 
 public class CityCreator : MonoBehaviour
 {
-	[Header("General Settings:")]
+	[Header("What to generate:")]
+	public bool createMaze = false;
+	public bool createCity = true;
+
+	[Header("General maze settings:")]
+	public float heightVariation = 5f;
+	public float wallPercentage = .3f;
+	public float wallPercentageVariation = .2f;
+	public float wallDistance = 5f;
+
+	public float mazePerlinMultiplier = 1f;
+	public float mazePerlinScale = 1f;
+	public GameObject wallObject;
+
+	[Header("General City Settings:")]
 	public bool teirGeneration; //experimental
 	public List<CityBlock> blocks; //list of all blocks
 	public List<CityBlock> rareBuildings;
@@ -45,7 +59,7 @@ public class CityCreator : MonoBehaviour
 		//StartCoroutine(generateCity());
     //}
 
-	public IEnumerator generateCity(int seed){
+	public IEnumerator generate(int seed){
 		Debug.Log("world seed: " + seed);
 		if(City != null){
 			Destroy(City);
@@ -53,32 +67,47 @@ public class CityCreator : MonoBehaviour
 		City = new GameObject("City");
 		Random.seed = seed;
 		float maxDist = sizeX/2 * Mathf.Sqrt(2);
-        for(int x = 0; x < sizeX; x++){
-			for(int y = 0; y < sizeY; y++){
-				//distanceToCenter = Vector2.Distance(new Vector2(x, y), new Vector2(sizeX/2, sizeY/2))/maxDist;
-				//Debug.Log(GetPerlinValue(x, y));
-				//Debug.Log(Mathf.RoundToInt(GetPerlinValue(x, y) * 6));
-				//Debug.Log("X: " + x + ", Y: " + y);
-				//CityBlock block = blocks[Mathf.RoundToInt(GetPerlinValue(x, y) * (blocks.Count - 1))];//GetBlock(distanceToCenter);
-				CityBlock block = blocks[4];
-				for(int buildingX = 0; buildingX < blockSize; buildingX++){
-					for(int buildingY = 0; buildingY < blockSize; buildingY++){
-						if((buildingX == 0 || buildingX == blockSize - 1) || (buildingY == 0 || buildingY == blockSize - 1)){
-							Quaternion blockRotation = Quaternion.Euler(0f, Random.Range(0, 3) * 90, 0f);
-						
-							GameObject baseFloor = Instantiate(block.gameObject, new Vector3(x * blockSpacing + buildingX * buildingSpacing + buildingSpacing * blockSize, 0f, y * blockSpacing + buildingY * buildingSpacing + buildingSpacing * blockSize), blockRotation, City.transform);
-							baseFloor.transform.GetChild(0).GetComponent<MeshCollider>().enabled = true;
-
-							int buildingHeight = Mathf.RoundToInt(Mathf.Pow(GetPerlinValue(x * blockSize + buildingX, y * blockSize + buildingY), perlinExponent) * maxHeight) + Random.Range(-inBlockNoise, inBlockNoise);
-							
-							for(int floor = 1; floor < buildingHeight; floor++){
-								Instantiate(block.gameObject, new Vector3(x * blockSpacing + buildingX * buildingSpacing + buildingSpacing * blockSize, floor * heightSpacing, y * blockSpacing + buildingY * buildingSpacing + buildingSpacing * blockSize), blockRotation, City.transform);
-							}
+		if(createMaze){
+			float modifiedWallPercentage = Random.Range(-wallPercentageVariation, wallPercentageVariation) + wallPercentage;
+			for(int x = 0; x < sizeX; x++){
+				for(int y = 0; y < sizeY; y++){
+					for(int j = 0; j <= 90; j += 90){ //rotation
+						if(Random.Range(0f, 1f) < modifiedWallPercentage){
+							Instantiate(wallObject, new Vector3(x * wallDistance, Mathf.PerlinNoise(x * mazePerlinScale * sizeX, y * mazePerlinScale * sizeY) * mazePerlinMultiplier, y * wallDistance), Quaternion.Euler(0f, j, 0f), City.transform);
 						}
 					}
 				}
 			}
 		}
+
+		if(createCity){
+			for(int x = 0; x < sizeX; x++){
+				for(int y = 0; y < sizeY; y++){
+					//distanceToCenter = Vector2.Distance(new Vector2(x, y), new Vector2(sizeX/2, sizeY/2))/maxDist;
+					//Debug.Log(GetPerlinValue(x, y));
+					//Debug.Log(Mathf.RoundToInt(GetPerlinValue(x, y) * 6));
+					//Debug.Log("X: " + x + ", Y: " + y);
+					//CityBlock block = blocks[Mathf.RoundToInt(GetPerlinValue(x, y) * (blocks.Count - 1))];//GetBlock(distanceToCenter);
+					CityBlock block = blocks[4];
+					for(int buildingX = 0; buildingX < blockSize; buildingX++){
+						for(int buildingY = 0; buildingY < blockSize; buildingY++){
+							if((buildingX == 0 || buildingX == blockSize - 1) || (buildingY == 0 || buildingY == blockSize - 1)){
+								Quaternion blockRotation = Quaternion.Euler(0f, Random.Range(0, 3) * 90, 0f);
+							
+								GameObject baseFloor = Instantiate(block.gameObject, new Vector3(x * blockSpacing + buildingX * buildingSpacing + buildingSpacing * blockSize, 0f, y * blockSpacing + buildingY * buildingSpacing + buildingSpacing * blockSize), blockRotation, City.transform);
+								baseFloor.transform.GetChild(0).GetComponent<MeshCollider>().enabled = true;
+
+								int buildingHeight = Mathf.RoundToInt(Mathf.Pow(GetPerlinValue(x * blockSize + buildingX, y * blockSize + buildingY), perlinExponent) * maxHeight) + Random.Range(-inBlockNoise, inBlockNoise);
+								
+								for(int floor = 1; floor < buildingHeight; floor++){
+									Instantiate(block.gameObject, new Vector3(x * blockSpacing + buildingX * buildingSpacing + buildingSpacing * blockSize, floor * heightSpacing, y * blockSpacing + buildingY * buildingSpacing + buildingSpacing * blockSize), blockRotation, City.transform);
+								}
+							}
+						}
+					}
+				}
+			}
+		}	
 		City.transform.localScale = new Vector3(scale, scale, scale);
 		yield return null;
 	}
@@ -86,8 +115,8 @@ public class CityCreator : MonoBehaviour
 	float GetPerlinValue(int x, int y){
 		float xCoord = (float)x/(sizeX * blockSize + blockSize) * perlinScale;
 		float yCoord = (float)y/(sizeY * blockSize + blockSize) * perlinScale;
-		Debug.Log(xCoord);
-		Debug.Log(yCoord);
+		//Debug.Log(xCoord);
+		//Debug.Log(yCoord);
 
 		return Mathf.PerlinNoise(xCoord, yCoord);
 	}
@@ -124,7 +153,7 @@ public class CityCreator : MonoBehaviour
 
 	void OnValidate(){
 		if(Application.isPlaying){
-			StartCoroutine(generateCity(0));
+			StartCoroutine(generate(0));
 		}
 	}
 }

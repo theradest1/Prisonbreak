@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
 	CharacterController controller;
 	GameManager gameManager;
 	GunManager gunManager;
+	ServerComm serverComm;
+	public float footstepIntervals = .1f;
 	public float speed = 10f;
 	public float gravity = -9.81f;
 	Vector3 velocity;
@@ -40,8 +42,15 @@ public class PlayerMovement : MonoBehaviour
 		controller = this.gameObject.GetComponent<CharacterController>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		gunManager = gameManager.gameObject.GetComponent<GunManager>();
+		serverComm = GameObject.Find("Server").GetComponent<ServerComm>();
+		Debug.Log(serverComm);
+		InvokeRepeating("footstep", footstepIntervals, footstepIntervals);
     }
 
+	void footstep(){
+		if((Input.GetAxis("Horizontal") != 0f || Input.GetAxis("Vertical") != 0f) && Physics.CheckSphere(groundCheck.position, groundDistance, groundMask))
+		StartCoroutine(serverComm.Event("sound " + Random.Range(15, 19) + " " + this.gameObject.transform.position.x + " " + this.gameObject.transform.position.y + " " + this.gameObject.transform.position.z));
+	}
     // Update is called once per frame
     void Update()
     {

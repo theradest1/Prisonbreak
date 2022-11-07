@@ -68,7 +68,7 @@ public class ServerComm : MonoBehaviour
 
 			GameObject.Find("Player").name = ID;
 			StartCoroutine(updatePlayers());
-			StartCoroutine(cityCreator.generateCity(int.Parse(processedData["seed"])));
+			StartCoroutine(cityCreator.generate(int.Parse(processedData["seed"])));
 		}
 	}
 
@@ -132,7 +132,7 @@ public class ServerComm : MonoBehaviour
 			Debug.Log("Left server succesfully");
 		}
 
-		//UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
+		UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
 		Application.Quit();
 		
 	}
