@@ -76,7 +76,7 @@ public class EventManager : MonoBehaviour
 		else{
 			gameManager.health -= fDamage;
 			if(gameManager.health <= 0f){
-				playerMovement.teleport(new Vector3(-10, -20, -10));
+				playerMovement.teleport(new Vector3(0, 3, 0));
 				StartCoroutine(serverComm.Event("damage " + ID + " " + -(100 - gameManager.health)));
 			}
 			gameManager.updateGUI();

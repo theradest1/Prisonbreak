@@ -11,7 +11,7 @@ var IDcounter = 0;
 var players = 0;
 var playerData = {};
 var changingData = {};
-var teamSpawnPos = {"police": "(-10, 90, -10)", "prisoner": "(-10, 20, -10)"};
+var teamSpawnPos = {"police": "(-10, 90, -10)", "prisoner": "(0, 3, 0)"};
 
 setInterval(checkDisconnectTimers, timoutCheck);
 

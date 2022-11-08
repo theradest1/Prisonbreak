@@ -17,7 +17,7 @@ public class ServerComm : MonoBehaviour
 	public float level;
 	Transform playerTransform;
 	PlayerMovement playerMovement;
-	public float updateDelay = .1f;
+	public float updateDelay = 0f;
 	string serverAddress;
 	EventManager eventManager;
 	GameManager gameManager;
