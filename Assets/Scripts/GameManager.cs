@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 	public float health = 100f;
 	public float healthIncreasePerFrame = .001f;
 	public float money = 0f;
+	public GameObject inGameMenu;
+	public Slider SensitivitySlider;
 
 	[HideInInspector]
 	public float stolenMoney = 0f;
@@ -30,8 +32,10 @@ public class GameManager : MonoBehaviour
 	GameObject player;
 	PlayerMovement playerMovement;
 	Vector3 pastLoc;
+	PlayerLook playerLook;
 
 	void Start(){
+		playerLook = GameObject.Find("Main Camera").GetComponent<PlayerLook>();
 		serverComm = GameObject.Find("Server").GetComponent<ServerComm>();
 
 		gunManager = this.gameObject.GetComponent<GunManager>();
@@ -39,7 +43,7 @@ public class GameManager : MonoBehaviour
 
 		player = GameObject.Find("Player");
 		playerMovement = player.GetComponent<PlayerMovement>();
-
+		playerLook.mouseSense = SensitivitySlider.value;
 	}
     // Update is called once per frame
     void Update()
@@ -51,12 +55,21 @@ public class GameManager : MonoBehaviour
 		//input
         if (Input.GetKeyDown("escape"))
         {
-            print("attempting to leave server");
-			StartCoroutine(serverComm.LeaveServer());
+            //print("attempting to leave server");
+			//StartCoroutine(serverComm.LeaveServer());
+			inGameMenu.SetActive(!inGameMenu.active);
+			if(inGameMenu.active){
+				Cursor.lockState = CursorLockMode.None;
+				playerLook.mouseSense = 0f;
+			}
+			else{
+				Cursor.lockState = CursorLockMode.Locked;
+				setSensitivity();
+			}
         }
 
 		//gun input stuffs
-		if(Input.GetKey(KeyCode.Mouse0)){
+		if(Input.GetKey(KeyCode.Mouse0) && !inGameMenu.active){
 			gunManager.shoot();
 		}
 		if(Input.GetKeyDown(KeyCode.Mouse1)){
@@ -126,5 +139,13 @@ public class GameManager : MonoBehaviour
 		money += stolenMoney;
 		stolenMoney = 0f;
 		updateGUI();
+	}
+
+	public void leaveServer(){
+		print("attempting to leave server");
+		StartCoroutine(serverComm.LeaveServer());
+	}
+	public void setSensitivity(){
+		playerLook.mouseSense = SensitivitySlider.value;
 	}
 }

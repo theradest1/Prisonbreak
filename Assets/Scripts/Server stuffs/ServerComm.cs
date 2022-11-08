@@ -17,14 +17,16 @@ public class ServerComm : MonoBehaviour
 	public float level;
 	Transform playerTransform;
 	PlayerMovement playerMovement;
-	public float updateDelay = .1f;
+	public float updateDelay = 0f;
 	string serverAddress;
 	EventManager eventManager;
 	GameManager gameManager;
+	CityCreator cityCreator;
 
     // Start is called before the first frame update
     void Start()
     {
+		cityCreator = GameObject.Find("CityCreator").GetComponent<CityCreator>();
 		eventManager = GameObject.Find("GameManager").GetComponent<EventManager>();
 		gameManager = eventManager.gameObject.GetComponent<GameManager>();
 		playerTransform = GameObject.Find("Player").transform;
@@ -66,6 +68,7 @@ public class ServerComm : MonoBehaviour
 
 			GameObject.Find("Player").name = ID;
 			StartCoroutine(updatePlayers());
+			StartCoroutine(cityCreator.generate(int.Parse(processedData["seed"])));
 		}
 	}
 
@@ -129,7 +132,7 @@ public class ServerComm : MonoBehaviour
 			Debug.Log("Left server succesfully");
 		}
 
-		UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
+		//UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
 		Application.Quit();
 		
 	}

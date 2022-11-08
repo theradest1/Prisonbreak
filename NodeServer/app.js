@@ -5,13 +5,19 @@ const port = 3000;
 const host = "0.0.0.0";
 const timoutMax = 3; //seconds
 const timoutCheck = 1000; //ms
+const mapSeed = getRandomInt(9999999);
+console.log(mapSeed);
 var IDcounter = 0;
 var players = 0;
 var playerData = {};
 var changingData = {};
-var teamSpawnPos = {"police": "(-10, 50, -10)", "prisoner": "(-10, -20, -10)"};
+var teamSpawnPos = {"police": "(-10, 90, -10)", "prisoner": "(0, 3, 0)"};
 
 setInterval(checkDisconnectTimers, timoutCheck);
+
+function getRandomInt(max) {
+	return Math.floor(Math.random() * max);
+}
 
 function checkDisconnectTimers(){
 	var playersToRemove = [];
@@ -55,13 +61,13 @@ app.get("/join/:usrname/:team", (req, res) =>{
 		"inventory": [
 			{ item: "pistol" },
 			{ item: "keycard" }
-		],
+		], 
 	};
 	var ID = IDcounter;
 	playerData[ID] = data;
 	changingData[ID] = {"pos": "(0, 0, 0)", "rot": "(0, 0, 0)", "events": [], "ID": ID};
 	changingData[ID].pos = teamSpawnPos[req.params["team"]];
-	res.json({"ID": ID, "level": 3.7, "pos": changingData[ID].pos, "money": playerData[ID].money});
+	res.json({"ID": ID, "level": 3.7, "pos": changingData[ID].pos, "money": playerData[ID].money, "seed": mapSeed});
 	for(var subNode in changingData){
 		if(ID != subNode){
 			changingData[subNode].events.push("join " + ID + " " + req.params["usrname"] + " " + req.params["team"] + " " + playerData[ID].health);

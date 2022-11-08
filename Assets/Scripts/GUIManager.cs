@@ -8,9 +8,9 @@ using System.Text.RegularExpressions; //for regex
 
 public class GUIManager : MonoBehaviour
 {
-	public static string usrname;
-	public static string workingAddress;// = "http://192.168.0.24:3000/";
-	public static string team;
+	public static string usrname;// = "bruhMoment";
+	public static string workingAddress;// = "http://192.168.0.20:3000/";
+	public static string team = "prisoner";
 	public TextMeshProUGUI usrnameError;
 	public TMP_InputField wantedUsername;
 
@@ -26,7 +26,7 @@ public class GUIManager : MonoBehaviour
 	}
 
 	public void leaveGame(){
-		UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
+		//UnityEditor.EditorApplication.isPlaying = false; //This needs to be commented out on build or it just wont build
 		Application.Quit();
 	}
 
@@ -36,7 +36,7 @@ public class GUIManager : MonoBehaviour
 			Debug.Log("Trying to connect to public server ip.");
 			StartCoroutine(tryToConnect("http://75.100.205.73:3000/"));
 			Debug.Log("Trying to connect to local server ip.");
-			StartCoroutine(tryToConnect("http://192.168.0.17:3000/"));
+			StartCoroutine(tryToConnect("http://localhost:3000/"));
 		}
 		else{
 			usrnameError.text = "Username is not long enough";
