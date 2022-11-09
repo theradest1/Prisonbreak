@@ -4378,8 +4378,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2570cbc3acc2d34a9bf2dbc375999c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
-  kickback: 8
+  damage: 20
+  kickbackVertical: 5
+  kickbackVerticalVariation: 3
+  kickbackHorizontal: 5
+  reductionOfRecoilWhenADS: 0.3
+  changeInFOVOnShot: 15
+  reductionOfFOVChangeWhenADS: 0.2
   recoverySpeed: 15
   totalBullets: 10
   reloadTime: 0.7
@@ -4473,8 +4478,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2570cbc3acc2d34a9bf2dbc375999c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  kickback: 12
+  damage: 30
+  kickbackVertical: 3
+  kickbackVerticalVariation: 1
+  kickbackHorizontal: 1
+  reductionOfRecoilWhenADS: 0.4
+  changeInFOVOnShot: 7
+  reductionOfFOVChangeWhenADS: 0.5
   recoverySpeed: 10
   totalBullets: 30
   reloadTime: 1
@@ -4962,6 +4972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSense: 500
+  xRot: 0
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5590,8 +5601,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2570cbc3acc2d34a9bf2dbc375999c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 80
-  kickback: 100
+  damage: 200
+  kickbackVertical: 25
+  kickbackVerticalVariation: 10
+  kickbackHorizontal: 5
+  reductionOfRecoilWhenADS: 0
+  changeInFOVOnShot: 40
+  reductionOfFOVChangeWhenADS: 1.5
   recoverySpeed: 2
   totalBullets: 6
   reloadTime: 5

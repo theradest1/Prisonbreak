@@ -11,6 +11,7 @@ public class GunManager : MonoBehaviour
 	public List<GunInfo> gunInfos = new List<GunInfo>();
 	GameObject gunHolder;
 	GameObject cam;
+	PlayerLook playerLook;
 	Camera camComponent;
 
 	[HideInInspector]
@@ -35,6 +36,7 @@ public class GunManager : MonoBehaviour
     {
 		gunHolder = GameObject.Find("guns");
 		cam = GameObject.Find("Main Camera");
+		playerLook = cam.GetComponent<PlayerLook>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		serverComm = GameObject.Find("Server").GetComponent<ServerComm>();
 		//get gun info ahead of time for performance
@@ -73,12 +75,13 @@ public class GunManager : MonoBehaviour
 			bullets -= 1;
 			gameManager.updateGUI();
 			actionTimer += gunInfos[gunID].shootDelay;
-			if(ads){
-				gunHolder.transform.Rotate(-gunInfos[gunID].kickback/2, 0f, 0f, Space.Self);
-			}
-			else{
-				gunHolder.transform.Rotate(-gunInfos[gunID].kickback, 0f, 0f, Space.Self);
-			}
+
+			//recoil
+			Vector2 kickback = gunInfos[gunID].kickback(ads);
+			gunHolder.transform.Rotate(0f, kickback[1], 0f, Space.Self);
+			playerLook.xRot -= kickback[0];
+			camComponent.fieldOfView += gunInfos[gunID].FOVOnShot(ads);
+			
 			StartCoroutine(serverComm.Event("sound " + gunInfos[gunID].shootSoundID.ToString() + " " + gunObjects[gunID].transform.position.x.ToString() + " " + gunObjects[gunID].transform.position.y.ToString() + " " + gunObjects[gunID].transform.position.z.ToString()));
 			return;
 		}

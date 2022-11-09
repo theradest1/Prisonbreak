@@ -6,7 +6,8 @@ public class PlayerLook : MonoBehaviour
 {
 	public float mouseSense = 100f;
 	Transform player;
-	float xRot = 0f;
+    [HideInInspector]
+	public float xRot = 0f;
 
     // Start is called before the first frame update
     void Start()
